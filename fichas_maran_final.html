@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fichas Sesión — Maran</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bur: #7B1A2E; --bur2: #9B2A3E; --ora: #C8591A;
+  --cream: #F7F3EE; --dark: #1A1410; --mid: #5A4A3A;
+  --line: #E2D9CF; --ibg: #FFFDF9; --tag: #F0E8E0;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--dark); font-size: 14px; }
+
+.header { background: var(--bur); padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.header h1 { font-family: 'Playfair Display', serif; font-size: 20px; color: #fff; font-weight: 600; }
+.header p { color: rgba(255,255,255,0.55); font-size: 11px; margin-top: 2px; letter-spacing: 0.4px; text-transform: uppercase; }
+.header-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.hbtn { padding: 7px 14px; border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; cursor: pointer; border: none; letter-spacing: 0.5px; text-transform: uppercase; transition: all 0.2s; }
+.hbtn-ghost { background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.25); }
+.hbtn-ghost:hover { background: rgba(255,255,255,0.22); }
+.hbtn-ora { background: var(--ora); color: #fff; }
+.hbtn-ora:hover { background: #B04A10; }
+
+.tabs { background: #1A1410; display: flex; overflow-x: auto; padding: 0 32px; }
+.tab { padding: 12px 20px; font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.38); cursor: pointer; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.2s; }
+.tab:hover { color: rgba(255,255,255,0.7); }
+.tab.active { color: #fff; border-bottom-color: var(--ora); }
+
+.content { max-width: 820px; margin: 0 auto; padding: 32px 20px 80px; }
+.panel { display: none; }
+.panel.active { display: block; }
+
+.profile-bar { display: flex; align-items: center; gap: 16px; background: #fff; border: 1px solid var(--line); border-left: 5px solid var(--bur); padding: 16px 20px; margin-bottom: 24px; border-radius: 2px; }
+.avatar { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 16px; color: #fff; flex-shrink: 0; }
+.pname { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 600; }
+.pmeta { font-size: 11px; color: var(--mid); margin-top: 2px; display: flex; gap: 12px; flex-wrap: wrap; }
+.dot { width: 4px; height: 4px; border-radius: 50%; background: var(--ora); display: inline-block; margin-right: 4px; vertical-align: middle; }
+
+.sec { margin-bottom: 22px; }
+.sec-title { font-size: 9.5px; font-weight: 500; letter-spacing: 1.8px; text-transform: uppercase; color: var(--bur); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+
+.hyp { background: #fff; border: 1px solid var(--line); border-left: 3px solid var(--tag); border-radius: 2px; padding: 12px 16px; margin-bottom: 8px; font-size: 12.5px; color: var(--mid); line-height: 1.6; }
+.hyp-label { font-size: 9.5px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--ora); margin-bottom: 4px; }
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+.fgroup label { display: block; font-size: 10px; font-weight: 500; letter-spacing: 0.7px; text-transform: uppercase; color: var(--mid); margin-bottom: 4px; }
+.fgroup input, .fgroup select {
+  width: 100%; border: 1px solid var(--line); border-radius: 2px; padding: 8px 10px;
+  font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--dark);
+  background: var(--ibg); outline: none; transition: border-color 0.2s; appearance: none;
+}
+.fgroup input:focus, .fgroup select:focus { border-color: var(--bur); }
+
+.qblock { background: #fff; border: 1px solid var(--line); border-radius: 2px; padding: 16px 18px; margin-bottom: 12px; }
+.qnum { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; background: var(--bur); color: #fff; font-size: 10px; font-weight: 600; border-radius: 50%; margin-bottom: 7px; }
+.qtext { font-family: 'Playfair Display', serif; font-size: 13.5px; font-style: italic; color: var(--dark); margin-bottom: 8px; line-height: 1.5; }
+.qhint { font-size: 11px; color: #888; margin-bottom: 10px; line-height: 1.5; padding: 8px 10px; background: var(--cream); border-left: 2px solid var(--line); border-radius: 0 2px 2px 0; }
+
+textarea { width: 100%; border: 1px solid var(--line); border-radius: 2px; padding: 10px 12px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--dark); background: var(--ibg); resize: vertical; min-height: 80px; line-height: 1.6; transition: border-color 0.2s; outline: none; }
+textarea:focus { border-color: var(--bur); }
+textarea::placeholder { color: #bbb; }
+
+.comp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); gap: 7px; margin-bottom: 12px; }
+.comp { display: flex; align-items: center; gap: 8px; padding: 8px 11px; background: #fff; border: 1px solid var(--line); border-radius: 2px; cursor: pointer; transition: all 0.15s; font-size: 12px; color: var(--mid); user-select: none; }
+.comp:hover { border-color: var(--bur); color: var(--dark); }
+.comp.on { background: var(--bur); border-color: var(--bur); color: #fff; }
+.ccheck { width: 14px; height: 14px; border: 1.5px solid currentColor; border-radius: 2px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 9px; }
+
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.ftag { padding: 5px 12px; background: var(--tag); border: 1px solid var(--line); border-radius: 20px; font-size: 11.5px; color: var(--mid); cursor: pointer; transition: all 0.15s; user-select: none; }
+.ftag:hover { border-color: var(--bur); color: var(--bur); }
+.ftag.on { background: var(--bur); border-color: var(--bur); color: #fff; }
+
+.stars-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.rlabel { font-size: 12.5px; color: var(--mid); min-width: 148px; }
+.stars { display: flex; gap: 2px; }
+.star { width: 22px; height: 22px; cursor: pointer; color: var(--line); font-size: 16px; line-height: 22px; text-align: center; transition: color 0.1s; }
+.star.on { color: var(--ora); }
+
+.bar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid var(--line); padding: 10px 32px; display: flex; align-items: center; justify-content: space-between; gap: 12px; z-index: 100; }
+.status { font-size: 11.5px; color: #999; display: flex; align-items: center; gap: 7px; }
+.sdot { width: 7px; height: 7px; border-radius: 50%; background: #ccc; transition: background 0.3s; }
+.sdot.ok { background: #4CAF50; }
+.sdot.pend { background: var(--ora); }
+.bbtns { display: flex; gap: 7px; }
+.bbtn { padding: 8px 18px; border: none; border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+.bbtn-sec { background: var(--cream); border: 1px solid var(--line); color: var(--mid); }
+.bbtn-sec:hover { border-color: var(--bur); color: var(--bur); }
+.bbtn-pri { background: var(--bur); color: #fff; }
+.bbtn-pri:hover { background: var(--bur2); }
+
+.modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 200; align-items: center; justify-content: center; }
+.modal-bg.open { display: flex; }
+.modal { background: #fff; border-radius: 4px; padding: 28px; max-width: 400px; width: 90%; }
+.modal h3 { font-family: 'Playfair Display', serif; font-size: 18px; margin-bottom: 16px; }
+.modal .fgroup { margin-bottom: 12px; }
+.modal-act { display: flex; gap: 8px; margin-top: 20px; justify-content: flex-end; }
+
+.toast { position: fixed; top: 16px; right: 16px; background: var(--dark); color: #fff; padding: 10px 18px; border-radius: 3px; font-size: 12.5px; z-index: 300; opacity: 0; transform: translateY(-8px); transition: all 0.25s; pointer-events: none; max-width: 320px; line-height: 1.4; }
+.toast.show { opacity: 1; transform: translateY(0); }
+
+#file-in { display: none; }
+
+.saved-badge { display: inline-block; background: #E8F5E9; color: #2E7D32; font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 500; margin-left: 8px; }
+
+@media (max-width: 600px) {
+  .header { padding: 16px; }
+  .tabs { padding: 0 16px; }
+  .content { padding: 20px 12px 80px; }
+  .grid2 { grid-template-columns: 1fr; }
+  .bar { padding: 10px 16px; }
+}
+@media print {
+  .tabs, .bar, .header-btns, .hbtn { display: none !important; }
+  .header { background: #7B1A2E !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; padding: 16px 24px !important; }
+  .panel { display: none !important; }
+  .panel.active { display: block !important; }
+  .profile-bar { border-left: 5px solid #7B1A2E !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .avatar { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .comp.on { background: #7B1A2E !important; color: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .ftag.on { background: #7B1A2E !important; color: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .star.on { color: #C8591A !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  textarea { border: 1px solid #E2D9CF !important; min-height: auto !important; }
+  body { background: #fff; }
+  * { box-shadow: none !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <h3>Nueva persona</h3>
+    <div class="fgroup"><label>Nombre completo</label><input type="text" id="n-nom" placeholder="Ej: Juan Pérez"></div>
+    <div class="fgroup"><label>Puesto</label><input type="text" id="n-pue" placeholder="Ej: Recepcionista"></div>
+    <div class="fgroup"><label>Sector</label><input type="text" id="n-sec" placeholder="Ej: Front Office"></div>
+    <div class="fgroup"><label>Reporta a</label><input type="text" id="n-rep" placeholder="Ej: Gerente de RRHH"></div>
+    <div class="fgroup"><label>Notas previas (opcional)</label><textarea id="n-hip" rows="2" placeholder="Lo que ya sabés de esta persona..."></textarea></div>
+    <div class="modal-act">
+      <button class="bbtn bbtn-sec" onclick="closeModal()">Cancelar</button>
+      <button class="bbtn bbtn-pri" onclick="agregarPersona()">Crear ficha</button>
+    </div>
+  </div>
+</div>
+
+<div class="header">
+  <div>
+    <h1>Fichas de Sesión Individual</h1>
+    <p>Programa Mandos Medios · Maran Suites & Towers · SAS Consultora</p>
+  </div>
+  <div class="header-btns">
+    <button class="hbtn hbtn-ghost" onclick="openModal()">+ Nueva persona</button>
+    <input type="file" id="file-in" accept=".json" onchange="importar(event)">
+    <button class="hbtn hbtn-ghost" onclick="document.getElementById('file-in').click()">↑ Importar JSON</button>
+    <button class="hbtn hbtn-ora" onclick="exportar()">↓ Exportar JSON</button>
+  </div>
+</div>
+
+<div class="tabs" id="tabs"></div>
+<div class="content" id="panels"></div>
+
+<div class="bar">
+  <div class="status"><div class="sdot" id="sdot"></div><span id="slabel">Cargando...</span></div>
+  <div class="bbtns">
+    <button class="bbtn bbtn-sec" onclick="window.print()">Imprimir / PDF</button>
+    <button class="bbtn bbtn-pri" onclick="guardar()">Guardar</button>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = 'maran_fichas_v3';
+
+const BASE = [
+  { id:'diego', nombre:'Diego Beber', puesto:'Chef Ejecutivo', sector:'AAyBB — Cocina', reporte:'Gte AAyBB', color:'#7B1A2E', ini:'DB',
+    hip:'Tensión entre el hacer técnico y el liderar. Alta exigencia propia que puede dificultar la delegación. Posible aislamiento operativo respecto a otras áreas.',
+    obs:'¿Se percibe como líder o como el mejor técnico del grupo? ¿Delega o hace todo él? ¿Cómo habla de su equipo?',
+    comps:['Delegación','Comunicación con áreas','Gestión de equipo','Autoridad y rol','Organización operativa','Manejo de conflictos','Feedback al equipo','Gestión de costos','Visión estratégica','Motivación de equipo'],
+    focos:['Liderazgo personal','Comunicación entre áreas','Delegación efectiva','Gestión de equipo','Rol y autoridad','Organización del tiempo','Manejo de conflictos','Cultura de equipo'],
+    hints:['¿Se describe como técnico o como líder? ¿Qué tan cómodo está con su posición de mando?','¿Aparece la delegación? ¿Comunicación con otras áreas? ¿Habla de su equipo con empatía?','Nivel de autoconsciencia. ¿Nombra algo concreto o se cierra?','¿Tiene expectativas concretas? ¿Habla de él o del equipo?']
+  },
+  { id:'helga', nombre:'Helga Solís', puesto:'Ejecutiva de Eventos', sector:'AAyBB — Eventos', reporte:'Gte AAyBB', color:'#C8591A', ini:'HS',
+    hip:'Alta presión comercial combinada con coordinación interna de múltiples áreas. Posible tensión entre su rol de vendedora y el de organizadora.',
+    obs:'¿Cómo maneja la incertidumbre y los cambios de último momento? ¿Habla de los clientes con entusiasmo o con desgaste?',
+    comps:['Límites con clientes','Coordinación interna','Gestión comercial','Manejo de incertidumbre','Comunicación entre áreas','Planificación de eventos','Autonomía en decisiones','Manejo de conflictos','Visión estratégica','Proyecciones y reportes'],
+    focos:['Liderazgo personal','Comunicación entre áreas','Gestión comercial','Organización del tiempo','Rol y autoridad','Manejo de conflictos','Autonomía','Cultura de equipo'],
+    hints:['¿Se describe desde la venta o desde la coordinación? ¿Se percibe con autonomía o dependiente?','¿Menciona coordinación con cocina, salón, RRHH? ¿Expectativas del cliente vs. realidad del hotel?','¿Nombra algo vinculado a la venta, la gestión o el trabajo en equipo?','¿Sus expectativas son personales o laborales? ¿Habla de herramientas concretas?']
+  },
+  { id:'matias', nombre:'Matías Sobrino', puesto:'Encargado de Restaurante', sector:'AAyBB — Salón', reporte:'Gte AAyBB / Gte RRHH', color:'#3A5A7B', ini:'MS',
+    hip:'El rol más complejo en términos de liderazgo cotidiano: recibe, contiene, supervisa y responde todo al mismo tiempo. Probable modo reactivo más que anticipatorio.',
+    obs:'¿Cómo ejerce su autoridad? ¿Habla de su equipo con respeto o con distancia? ¿Tiene herramientas para gestionar el clima o lo lleva a puro instinto?',
+    comps:['Autoridad y rol','Clima de equipo','Anticipación vs. reacción','Coordinación con cocina','Evaluación de desempeño','Comunicación con RRHH','Manejo de conflictos','Estándares de servicio','Motivación de equipo','Delegación'],
+    focos:['Liderazgo personal','Comunicación entre áreas','Clima y cultura de equipo','Organización del tiempo','Rol y autoridad','Manejo de conflictos','Anticipación operativa','Feedback al equipo'],
+    hints:['¿Se describe como el que "resuelve todo" o como alguien que lidera un equipo? ¿Hay orgullo, agotamiento o ambas?','¿Aparece algo sobre consistencia del equipo, rotación, compromiso?','¿Nombra algo vinculado a evaluaciones de desempeño, comunicación con RRHH o gestión del clima?','¿Hay algo de crecimiento personal o solo expectativas operativas?']
+  },
+  { id:'lucia', nombre:'Lucía', puesto:'Ejecutiva de Cuentas', sector:'Hospitalidad y Comercial', reporte:'Gerencia General', color:'#2D6A4F', ini:'LC',
+    hip:'Rol de doble eje: comercial (ventas, ocupación, estrategia de paquetes) y hospitalidad (experiencia del huésped, fidelización). Nexo entre operaciones y gerencia. Alta exigencia en resultados combinada con sensibilidad de servicio — posible tensión entre ambos mundos.',
+    obs:'¿Se percibe más como vendedora o como referente de hospitalidad? ¿Cómo maneja la tensión entre los objetivos comerciales y la calidad del vínculo con el cliente? ¿Se siente apoyada por los otros sectores o trabaja sola?',
+    comps:['Visión estratégica','Gestión comercial','Coordinación entre áreas','Hospitalidad y servicio','Negociación y persuasión','Fidelización de clientes','Comunicación interna','Autonomía en decisiones','Análisis e indicadores','Liderazgo e influencia'],
+    focos:['Liderazgo personal','Gestión comercial','Comunicación entre áreas','Hospitalidad como diferencial','Organización del tiempo','Negociación','Autonomía','Visión estratégica'],
+    hints:['¿Se describe desde lo comercial o desde el servicio? ¿Cómo define lo que hace en el día a día real vs. lo que dice el perfil?','¿Dónde siente que se le complica más: en la coordinación interna con otros sectores, en el cumplimiento de objetivos, o en el vínculo con clientes?','¿Hay algo sobre la gestión de la información, los reportes, o el trabajo independiente que le cueste? ¿Tiene dificultad para delegar o para pedir apoyo?','¿Qué resultado concreto esperaría ver en 6 meses? ¿Habla de logros comerciales, de vínculos, de reconocimiento, o de crecimiento personal?']
+  },
+  { id:'gonzalo', nombre:'Gonzalo', puesto:'Gerente AAyBB', sector:'Alimentos, Bebidas y Eventos', reporte:'Gerencia General', color:'#4A1B0C', ini:'GZ',
+    hip:'Es el jefe directo de Diego, Helga y Matías — lo que implica una triple responsabilidad de liderazgo sobre perfiles muy distintos. Su desafío probablemente no sea técnico sino de gestión humana: cómo sostener equipos con dinámicas y necesidades diferentes bajo un mismo paraguas de exigencia y estándares.',
+    obs:'¿Cómo describe su rol de líder frente a cada uno de sus tres reportes directos? ¿Tiene claridad sobre las diferencias de cada uno? ¿Delega con criterio o tiende a centralizar? ¿Cómo gestiona los conflictos entre áreas que él mismo coordina?',
+    comps:['Liderazgo de equipos diversos','Delegación con criterio','Gestión de conflictos entre áreas','Comunicación con Gerencia General','Visión estratégica del área','Feedback y desarrollo de personas','Coordinación operativa','Gestión de costos y resultados','Cultura de equipo','Toma de decisiones'],
+    focos:['Liderazgo integral','Gestión de equipos diversos','Delegación efectiva','Comunicación con gerencia','Desarrollo de personas','Manejo de conflictos entre áreas','Visión estratégica','Cultura y clima de área'],
+    hints:['¿Cómo describe su rol frente a sus tres reportes directos? ¿Los nombra individualmente o habla del área en general?','¿Cuál de los tres equipos (cocina, eventos, salón) le genera más tensión o demanda más energía? ¿Por qué?','¿Hay algo sobre cómo da feedback, cómo toma decisiones difíciles o cómo gestiona los roces entre áreas que siente que podría mejorar?','¿Qué tipo de líder quiere ser en 6 meses? ¿Habla de resultados, de equipo, o de su propio desarrollo?']
+  }
+];
+
+const QQ = [
+  '"¿Cómo describirías tu rol acá? No el título, sino lo que vos sentís que hacés realmente todos los días."',
+  '"¿Qué es lo que más te cuesta de liderar o coordinar a tu equipo?"',
+  '"¿Hay algo que sentís que podrías hacer mejor en tu trabajo y que todavía no encontraste cómo?"',
+  '"¿Qué esperás de este proceso? ¿Qué tendría que pasar para que dentro de 6 meses sientas que valió la pena?"'
+];
+
+let personas = [];
+let datos = {};
+let activo = null;
+
+function emptyDatos() {
+  return { fecha:'', dur:'', mod:'', animo:'', previa:'', q1:'', q2:'', q3:'', q4:'', fortalezas:'', cierre:'', proxima:'', tprox:'', comps:[], tags:[], rat:{ ap:0, co:0, en:0 } };
+}
+
+function init() {
+  const saved = loadFromStorage();
+  if (saved) {
+    personas = saved.personas;
+    datos = saved.datos;
+    personas.forEach(p => { if (!datos[p.id]) datos[p.id] = emptyDatos(); });
+    toast('✓ Datos cargados');
+    setStatus('ok', 'Datos guardados localmente');
+  } else {
+    personas = JSON.parse(JSON.stringify(BASE));
+    datos = {};
+    personas.forEach(p => datos[p.id] = emptyDatos());
+    setStatus('pend', 'Sin guardar aún');
+  }
+  activo = personas[0]?.id;
+  render();
+}
+
+function loadFromStorage() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch(e) { return null; }
+}
+
+function saveToStorage() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ personas, datos }));
+    return true;
+  } catch(e) { return false; }
+}
+
+function guardar() {
+  if (saveToStorage()) {
+    setStatus('ok', 'Guardado — ' + new Date().toLocaleTimeString('es-AR', {hour:'2-digit', minute:'2-digit'}));
+    toast('✓ Todo guardado correctamente');
+  } else {
+    toast('✗ No se pudo guardar en el navegador. Usá Exportar JSON como respaldo.');
+  }
+}
+
+// Guardado automático cada 60 segundos
+setInterval(() => {
+  if (saveToStorage()) {
+    setStatus('ok', 'Guardado automáticamente — ' + new Date().toLocaleTimeString('es-AR', {hour:'2-digit', minute:'2-digit'}));
+  }
+}, 60000);
+
+// Guardar antes de cerrar la pestaña
+window.addEventListener('beforeunload', () => { saveToStorage(); });
+
+function setStatus(state, msg) {
+  document.getElementById('sdot').className = 'sdot ' + (state==='ok'?'ok':state==='pend'?'pend':'');
+  document.getElementById('slabel').textContent = msg;
+}
+
+let autoSaveTimer = null;
+function markPending() {
+  setStatus('pend', 'Guardando...');
+  clearTimeout(autoSaveTimer);
+  autoSaveTimer = setTimeout(() => {
+    if (saveToStorage()) {
+      setStatus('ok', 'Guardado automáticamente — ' + new Date().toLocaleTimeString('es-AR', {hour:'2-digit', minute:'2-digit'}));
+    }
+  }, 1500);
+}
+
+function render() {
+  renderTabs();
+  renderPanels();
+}
+
+function renderTabs() {
+  const c = document.getElementById('tabs');
+  c.innerHTML = '';
+  personas.forEach(p => {
+    const t = document.createElement('div');
+    t.className = 'tab' + (p.id === activo ? ' active' : '');
+    t.textContent = p.nombre.split(' ').slice(0,2).join(' ');
+    t.onclick = () => switchTab(p.id);
+    c.appendChild(t);
+  });
+}
+
+function renderPanels() {
+  const c = document.getElementById('panels');
+  c.innerHTML = '';
+  personas.forEach(p => {
+    const d = datos[p.id];
+    const div = document.createElement('div');
+    div.className = 'panel' + (p.id === activo ? ' active' : '');
+    div.id = 'pnl-' + p.id;
+    div.innerHTML = buildPanel(p, d);
+    c.appendChild(div);
+  });
+}
+
+function switchTab(id) {
+  activo = id;
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', personas[i]?.id === id));
+  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'pnl-' + id));
+}
+
+function sel(id, field) { return `data-id="${id}" data-f="${field}"`; }
+
+function buildPanel(p, d) {
+  const opts = (arr, val) => arr.map(o => `<option${val===o?' selected':''}>${o}</option>`).join('');
+
+  const compsH = p.comps.map(c => `
+    <div class="comp${d.comps.includes(c)?' on':''}" data-id="${p.id}" data-comp="${c}" onclick="toggleComp(this)">
+      <div class="ccheck">${d.comps.includes(c)?'✓':''}</div>${c}
+    </div>`).join('');
+
+  const tagsH = p.focos.map(f => `
+    <div class="ftag${d.tags.includes(f)?' on':''}" data-id="${p.id}" data-tag="${f}" onclick="toggleTag(this)">${f}</div>`).join('');
+
+  const starsH = [['ap','Nivel de apertura'],['co','Confianza generada'],['en','Entusiasmo con el proceso']].map(([k,lbl]) => `
+    <div class="stars-row">
+      <div class="rlabel">${lbl}</div>
+      <div class="stars">${[1,2,3,4,5].map(i =>
+        `<div class="star${d.rat[k]>=i?' on':''}" onclick="setRat('${p.id}','${k}',${i})">★</div>`
+      ).join('')}</div>
+    </div>`).join('');
+
+  const qH = QQ.map((q,i) => `
+    <div class="qblock">
+      <div class="qnum">${i+1}</div>
+      <div class="qtext">${q}</div>
+      <div class="qhint">🔍 ${p.hints[i]}</div>
+      <textarea placeholder="Respuesta y observaciones..." ${sel(p.id,'q'+(i+1))} oninput="sf(this)">${d['q'+(i+1)]}</textarea>
+    </div>`).join('');
+
+  return `
+  <div class="profile-bar">
+    <div class="avatar" style="background:${p.color}">${p.ini}</div>
+    <div>
+      <div class="pname">${p.nombre}</div>
+      <div class="pmeta">
+        <span><span class="dot"></span>${p.puesto}</span>
+        <span><span class="dot"></span>${p.sector}</span>
+        <span><span class="dot"></span>Reporta a: ${p.reporte}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-title">Datos de la sesión</div>
+    <div class="grid2">
+      <div class="fgroup"><label>Fecha</label><input type="date" ${sel(p.id,'fecha')} value="${d.fecha}" onchange="sf(this)"></div>
+      <div class="fgroup"><label>Duración (min)</label><input type="number" placeholder="45" ${sel(p.id,'dur')} value="${d.dur}" onchange="sf(this)"></div>
+      <div class="fgroup"><label>Modalidad</label><select ${sel(p.id,'mod')} onchange="sf(this)"><option value="">Seleccionar</option>${opts(['Presencial','Online'],d.mod)}</select></div>
+      <div class="fgroup"><label>Estado de ánimo al inicio</label><select ${sel(p.id,'animo')} onchange="sf(this)"><option value="">Seleccionar</option>${opts(['Muy abierto / predispuesto','Neutral / expectante','Reservado / con dudas','Tenso / resistente'],d.animo)}</select></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-title">Hipótesis pre-sesión</div>
+    <div class="hyp"><div class="hyp-label">Foco probable</div>${p.hip}</div>
+    <div class="hyp"><div class="hyp-label">Punto de observación</div>${p.obs}</div>
+    <textarea placeholder="Anotá lo que querés tener presente antes de entrar..." ${sel(p.id,'previa')} oninput="sf(this)" rows="2">${d.previa}</textarea>
+  </div>
+
+  <div class="sec">
+    <div class="sec-title">Preguntas y respuestas</div>
+    ${qH}
+  </div>
+
+  <div class="sec">
+    <div class="sec-title">Diagnóstico de sesión</div>
+    <div class="hyp-label" style="margin-bottom:7px">Fortalezas identificadas</div>
+    <textarea placeholder="¿Qué recursos propios aparecieron? ¿Qué lo/la mueve?" ${sel(p.id,'fortalezas')} oninput="sf(this)" rows="3">${d.fortalezas}</textarea>
+    <br><br>
+    <div class="hyp-label" style="margin-bottom:7px">Áreas de desarrollo prioritarias</div>
+    <div class="comp-grid">${compsH}</div>
+    <div class="hyp-label" style="margin-bottom:7px;margin-top:6px">Foco para las próximas sesiones</div>
+    <div class="tags">${tagsH}</div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-title">Evaluación de la sesión</div>
+    ${starsH}
+  </div>
+
+  <div class="sec">
+    <div class="sec-title">Cierre y próximos pasos</div>
+    <div class="grid2">
+      <div class="fgroup"><label>Fecha próxima sesión</label><input type="date" ${sel(p.id,'proxima')} value="${d.proxima}" onchange="sf(this)"></div>
+      <div class="fgroup"><label>Tipo de próxima sesión</label><select ${sel(p.id,'tprox')} onchange="sf(this)"><option value="">Seleccionar</option>${opts(['Individual','Grupal presencial','Grupal online'],d.tprox)}</select></div>
+    </div>
+    <textarea placeholder="¿Qué acuerdos quedaron? ¿Qué vas a trabajar en la próxima sesión?" ${sel(p.id,'cierre')} oninput="sf(this)" rows="4">${d.cierre}</textarea>
+  </div>`;
+}
+
+function sf(el) {
+  datos[el.dataset.id][el.dataset.f] = el.value;
+  markPending();
+}
+
+function toggleComp(el) {
+  const id = el.dataset.id, c = el.dataset.comp, arr = datos[id].comps;
+  const i = arr.indexOf(c);
+  i === -1 ? arr.push(c) : arr.splice(i, 1);
+  el.classList.toggle('on');
+  el.querySelector('.ccheck').textContent = el.classList.contains('on') ? '✓' : '';
+  markPending();
+}
+
+function toggleTag(el) {
+  const id = el.dataset.id, t = el.dataset.tag, arr = datos[id].tags;
+  const i = arr.indexOf(t);
+  i === -1 ? arr.push(t) : arr.splice(i, 1);
+  el.classList.toggle('on');
+  markPending();
+}
+
+function setRat(id, k, v) {
+  datos[id].rat[k] = v;
+  const pnl = document.getElementById('pnl-' + id);
+  pnl.querySelectorAll('.star').forEach(s => {
+    const oc = s.getAttribute('onclick');
+    if (oc && oc.includes(`'${k}'`)) {
+      const sv = parseInt(oc.match(/,(\d)\)/)?.[1]);
+      s.classList.toggle('on', sv <= v);
+    }
+  });
+  markPending();
+}
+
+async function exportar() {
+  const fecha = new Date().toISOString().slice(0,10);
+  const payload = JSON.stringify({ version:2, exportado: new Date().toISOString(), programa:'Mandos Medios Maran — SAS Consultora', personas, datos }, null, 2);
+  const nombre = `maran_sesiones_${fecha}.json`;
+
+  if (window.showSaveFilePicker) {
+    try {
+      const h = await window.showSaveFilePicker({ suggestedName: nombre, types:[{ description:'JSON', accept:{'application/json':['.json']} }] });
+      const w = await h.createWritable();
+      await w.write(payload);
+      await w.close();
+      setStatus('ok', 'Exportado: ' + h.name);
+      toast('✓ Guardado. Ya está en tu carpeta de iCloud Drive.');
+      return;
+    } catch(e) { if (e.name === 'AbortError') return; }
+  }
+
+  const a = document.createElement('a');
+  a.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(payload);
+  a.download = nombre;
+  a.click();
+  toast('✓ Descargado. Buscalo en Descargas y movelo a iCloud Drive.');
+  setStatus('ok', 'Exportado a Descargas');
+}
+
+function importar(e) {
+  const f = e.target.files[0];
+  if (!f) return;
+  const r = new FileReader();
+  r.onload = ev => {
+    try {
+      const payload = JSON.parse(ev.target.result);
+      if (!payload.datos) throw new Error();
+      // Acepta versión 2 y versión 3
+      personas = payload.personas ? payload.personas : JSON.parse(JSON.stringify(BASE));
+      datos = payload.datos;
+      // Agrega personas del BASE que no estén en el JSON (ej: Lucía y Gonzalo)
+      BASE.forEach(b => {
+        if (!personas.find(p => p.id === b.id)) personas.push(JSON.parse(JSON.stringify(b)));
+        if (!datos[b.id]) datos[b.id] = emptyDatos();
+      });
+      personas.forEach(p => { if (!datos[p.id]) datos[p.id] = emptyDatos(); });
+      activo = personas[0]?.id;
+      render();
+      saveToStorage();
+      setStatus('ok', 'Importado: ' + f.name);
+      toast('✓ Fichas cargadas — Diego, Helga, Matías, Lucía y Gonzalo listos');
+    } catch(_) { toast('✗ Archivo inválido. Verificá que sea el JSON correcto.'); }
+  };
+  r.readAsText(f);
+  e.target.value = '';
+}
+
+function openModal() { document.getElementById('modal').classList.add('open'); }
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  ['n-nom','n-pue','n-sec','n-rep','n-hip'].forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
+}
+
+function agregarPersona() {
+  const nom = document.getElementById('n-nom').value.trim();
+  const pue = document.getElementById('n-pue').value.trim();
+  const sec = document.getElementById('n-sec').value.trim();
+  const rep = document.getElementById('n-rep').value.trim();
+  const hip = document.getElementById('n-hip').value.trim();
+  if (!nom || !pue) { toast('Completá al menos nombre y puesto'); return; }
+  const id = 'p' + Date.now();
+  const ini = nom.split(' ').slice(0,2).map(x=>x[0].toUpperCase()).join('');
+  const cols = ['#5A3A7B','#2D6A4F','#1A4A6B','#6B3A1A','#3A5A3A'];
+  personas.push({ id, nombre:nom, puesto:pue, sector:sec||'Sin especificar', reporte:rep||'Sin especificar',
+    color:cols[personas.length%cols.length], ini,
+    hip: hip||'Completar antes de la sesión.',
+    obs:'Completar antes de la sesión.',
+    comps:['Delegación','Comunicación con áreas','Gestión de equipo','Autoridad y rol','Organización operativa','Manejo de conflictos','Feedback al equipo','Motivación de equipo','Visión estratégica','Planificación'],
+    focos:['Liderazgo personal','Comunicación entre áreas','Gestión de equipo','Organización del tiempo','Rol y autoridad','Manejo de conflictos','Autonomía','Cultura de equipo'],
+    hints:['¿Cómo se describe en su rol? ¿Qué palabras usa?','¿Qué menciona primero al hablar de dificultades?','¿Tiene claridad sobre sus áreas de mejora?','¿Qué espera del proceso? ¿Sus expectativas son concretas?']
+  });
+  datos[id] = emptyDatos();
+  activo = id;
+  render();
+  closeModal();
+  markPending();
+  toast('✓ Ficha creada para ' + nom);
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+init();
+</script>
+</body>
+</html>
