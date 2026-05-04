@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fichas Sesión — Maran</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--bur:#7B1A2E;--bur2:#9B2A3E;--ora:#C8591A;--cream:#F7F3EE;--dark:#1A1410;--mid:#5A4A3A;--line:#E2D9CF;--ibg:#FFFDF9;--tag:#F0E8E0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);font-size:14px;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+
+/* HEADER */
+.header{background:var(--bur);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;flex-shrink:0}
+.header h1{font-family:'Playfair Display',serif;font-size:18px;color:#fff;font-weight:600}
+.header p{color:rgba(255,255,255,0.55);font-size:10px;margin-top:2px;letter-spacing:0.4px;text-transform:uppercase}
+.hbtns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.hbtn{padding:6px 12px;border-radius:2px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;cursor:pointer;border:none;letter-spacing:0.5px;text-transform:uppercase;transition:all 0.2s}
+.hbtn-pri{background:#fff;color:var(--bur)}.hbtn-pri:hover{background:#f0e8e0}
+.hbtn-sec{background:rgba(255,255,255,0.15);color:#fff}.hbtn-sec:hover{background:rgba(255,255,255,0.25)}
+.hbtn-warn{background:rgba(255,200,0,0.25);color:#ffe066;border:1px solid rgba(255,200,0,0.3)}.hbtn-warn:hover{background:rgba(255,200,0,0.35)}
+.pending-dot{width:7px;height:7px;border-radius:50%;background:#ffe066;display:inline-block;margin-right:4px;display:none}
+.pending-dot.show{display:inline-block}
+
+/* LAYOUT */
+.layout{display:flex;flex:1;overflow:hidden}
+
+/* SIDEBAR */
+.sidebar{width:220px;background:#fff;border-right:1px solid var(--line);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+.sb-section{padding:10px 0}
+.sb-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.6px;color:var(--mid);padding:6px 16px 4px;opacity:0.6}
+.sb-item{display:flex;align-items:center;gap:10px;padding:9px 16px;cursor:pointer;transition:background 0.15s;font-size:13px;color:var(--mid);border-left:3px solid transparent}
+.sb-item:hover{background:var(--cream)}
+.sb-item.active{background:var(--tag);color:var(--dark);font-weight:500;border-left-color:var(--bur)}
+.sb-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.sb-badge{margin-left:auto;font-size:10px;background:var(--line);color:var(--mid);padding:2px 6px;border-radius:10px}
+.sb-icon{font-size:14px;flex-shrink:0;width:16px;text-align:center}
+
+/* MAIN */
+.main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+
+/* DASHBOARD */
+.dash-wrap{padding:24px}
+.dash-title{font-family:'Playfair Display',serif;font-size:22px;color:var(--dark);margin-bottom:4px}
+.dash-sub{font-size:12px;color:var(--mid);margin-bottom:20px}
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:20px}
+.dash-card{background:#fff;border-radius:4px;overflow:hidden;border:1px solid var(--line);cursor:pointer;transition:box-shadow 0.2s,transform 0.15s}
+.dash-card:hover{box-shadow:0 4px 18px rgba(0,0,0,0.1);transform:translateY(-2px)}
+.card-bar{height:5px}
+.card-body{padding:16px}
+.card-ini{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#fff;margin-bottom:10px}
+.card-name{font-weight:600;font-size:14px}
+.card-role{font-size:11px;color:var(--mid);margin-top:2px}
+.card-sector{font-size:11px;color:var(--mid);opacity:0.7}
+.card-stats{margin-top:10px;padding-top:10px;border-top:1px solid var(--line);display:flex;gap:14px}
+.card-stat{font-size:11px;color:var(--mid);text-align:center}
+.card-stat strong{display:block;font-size:16px;font-weight:600;color:var(--dark)}
+.card-next{margin-top:8px;font-size:11px;color:var(--mid);background:var(--tag);padding:5px 8px;border-radius:2px}
+.card-no-sess{margin-top:8px;font-size:11px;color:var(--mid);font-style:italic}
+.dash-prog{background:#fff;border:1px solid var(--line);border-radius:4px;padding:16px}
+.dash-prog h3{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.6px;color:var(--mid);margin-bottom:14px}
+.prog-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:12px}
+.prog-row:last-child{margin-bottom:0}
+.prog-name{width:80px;color:var(--mid);flex-shrink:0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prog-bar-wrap{flex:1;background:var(--line);border-radius:4px;height:6px;overflow:hidden}
+.prog-bar{height:100%;border-radius:4px;transition:width 0.5s}
+.prog-n{font-size:11px;color:var(--mid);width:40px;text-align:right;flex-shrink:0}
+
+/* PERSONA PANEL */
+.persona-header{padding:18px 24px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;background:#fff;flex-shrink:0}
+.p-ini{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:#fff;flex-shrink:0}
+.p-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:600}
+.p-sub{font-size:11px;color:var(--mid);margin-top:2px}
+.p-badge{margin-left:auto;font-size:11px;background:var(--tag);color:var(--mid);padding:4px 10px;border-radius:12px;flex-shrink:0}
+
+/* SESSION BAR */
+.session-bar{display:flex;align-items:center;gap:8px;padding:10px 24px;background:var(--ibg);border-bottom:1px solid var(--line);overflow-x:auto;flex-shrink:0;min-height:48px}
+.sess-label{font-size:10px;color:var(--mid);text-transform:uppercase;letter-spacing:0.6px;flex-shrink:0;font-weight:600}
+.sess-chip{padding:5px 12px;border-radius:2px;font-size:12px;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--mid);transition:all 0.15s;flex-shrink:0;white-space:nowrap}
+.sess-chip:hover{border-color:var(--bur);color:var(--bur)}
+.sess-chip.active{background:var(--bur);color:#fff;border-color:var(--bur);font-weight:500}
+.sess-new{padding:5px 10px;border-radius:2px;font-size:12px;cursor:pointer;border:1px dashed var(--mid);background:transparent;color:var(--mid);transition:all 0.15s;flex-shrink:0;white-space:nowrap}
+.sess-new:hover{border-color:var(--bur);color:var(--bur)}
+.sess-empty-msg{font-size:12px;color:var(--mid);font-style:italic}
+
+/* FORM */
+.form-wrap{padding:20px 24px;flex:1}
+.section{margin-bottom:16px;background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.section-hd{padding:11px 16px;border-bottom:1px solid var(--line);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--mid);display:flex;align-items:center;gap:8px}
+.section-bd{padding:16px}
+.fields-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px}
+.field{flex:1;min-width:140px}
+.field label{display:block;font-size:11px;font-weight:500;color:var(--mid);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.4px}
+input[type=text],input[type=date],input[type=number],select,textarea{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:2px;background:var(--ibg);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--dark);outline:none;transition:border 0.2s}
+input[type=text]:focus,input[type=date]:focus,input[type=number]:focus,select:focus,textarea:focus{border-color:var(--bur)}
+textarea{resize:vertical;min-height:68px;line-height:1.5}
+select{cursor:pointer;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%235A4A3A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px}
+
+/* HYPOTHESIS */
+.hyp-box{background:var(--tag);border-radius:2px;padding:11px 14px;margin-bottom:10px}
+.hyp-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.6px;color:var(--mid);margin-bottom:3px}
+.hyp-text{font-size:13px;color:var(--dark);line-height:1.55}
+.obs-box{background:#fff;border:1px solid var(--line);border-radius:2px;padding:10px 14px;margin-bottom:10px}
+.obs-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.6px;color:var(--mid);margin-bottom:3px}
+.obs-text{font-size:12px;color:var(--mid);font-style:italic;line-height:1.5}
+
+/* Q&A */
+.qa-item{margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.qa-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.qa-q{font-size:13px;font-weight:500;color:var(--dark);margin-bottom:3px;line-height:1.4}
+.qa-hint{font-size:11px;color:var(--mid);font-style:italic;margin-bottom:7px;line-height:1.4}
+
+/* TAGS */
+.tag-grid{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.tag-item{padding:5px 10px;border-radius:2px;font-size:12px;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--mid);transition:all 0.15s;user-select:none}
+.tag-item:hover{border-color:var(--bur);color:var(--bur)}
+.tag-item.on{background:var(--bur);color:#fff;border-color:var(--bur)}
+
+/* RATINGS */
+.rat-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.rat-row:last-child{margin-bottom:0}
+.rat-label{font-size:12px;color:var(--dark);width:170px;flex-shrink:0}
+.stars{display:flex;gap:2px}
+.star{font-size:22px;cursor:pointer;color:#ddd;transition:color 0.1s;line-height:1}
+.star.on{color:#F5A623}
+.rat-val{font-size:12px;font-weight:500;color:var(--mid);width:20px}
+
+/* EMPTY STATE */
+.empty-state{padding:48px 24px;text-align:center;color:var(--mid)}
+.empty-state .es-icon{font-size:36px;margin-bottom:12px}
+.empty-state .es-title{font-size:14px;font-weight:500;margin-bottom:6px;color:var(--dark)}
+.empty-state .es-sub{font-size:12px}
+.es-btn{margin-top:16px;padding:8px 18px;background:var(--bur);color:#fff;border:none;border-radius:2px;font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;font-weight:500;text-transform:uppercase;letter-spacing:0.5px}
+.es-btn:hover{background:var(--bur2)}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:200;padding:20px}
+.modal-box{background:#fff;border-radius:4px;width:100%;max-width:440px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.2)}
+.modal-hd{background:var(--bur);padding:16px 20px;color:#fff;font-family:'Playfair Display',serif;font-size:16px;font-weight:600}
+.modal-bd{padding:20px}
+.modal-fld{margin-bottom:14px}
+.modal-fld label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;color:var(--mid);margin-bottom:5px}
+.modal-ft{padding:14px 20px;border-top:1px solid var(--line);display:flex;gap:8px;justify-content:flex-end}
+.btn{padding:8px 16px;border-radius:2px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;border:none;letter-spacing:0.4px;text-transform:uppercase;transition:all 0.15s}
+.btn-pri{background:var(--bur);color:#fff}.btn-pri:hover{background:var(--bur2)}
+.btn-sec{background:var(--tag);color:var(--mid)}.btn-sec:hover{background:var(--line)}
+.btn-danger{background:#fee;color:#c00;border:1px solid #fcc}.btn-danger:hover{background:#fdd}
+
+/* STATUS TOAST */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--dark);color:#fff;padding:9px 18px;border-radius:20px;font-size:12px;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:300;white-space:nowrap}
+.toast.show{opacity:1}
+
+/* PRINT */
+@media print{
+  .sidebar,.header,.session-bar,.hbtns,.sess-new,.modal-overlay,.toast,
+  .print-btn-row,.sb-item,.hbtn{display:none!important}
+  .layout{display:block}
+  body{height:auto;overflow:auto;font-size:12px}
+  .main{overflow:visible}
+  .section{page-break-inside:avoid;border:1px solid #ddd;margin-bottom:12px}
+  .persona-header{padding:12px 0;border-bottom:2px solid #333}
+  .form-wrap{padding:0}
+  @page{margin:20mm}
+}
+
+/* FILE INPUT */
+input[type=file]{display:none}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--mid)}
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- MODAL NUEVA PERSONA -->
+<div class="modal-overlay" id="modal" style="display:none">
+  <div class="modal-box">
+    <div class="modal-hd">Nueva persona</div>
+    <div class="modal-bd">
+      <div class="modal-fld"><label>Nombre completo</label><input type="text" id="m-nombre" placeholder="Ej: Juan Pérez"></div>
+      <div class="modal-fld"><label>Puesto</label><input type="text" id="m-puesto" placeholder="Ej: Recepcionista"></div>
+      <div class="modal-fld"><label>Sector</label><input type="text" id="m-sector" placeholder="Ej: Front Office"></div>
+      <div class="modal-fld"><label>Reporta a</label><input type="text" id="m-reporte" placeholder="Ej: Gerente de RRHH"></div>
+      <div class="modal-fld"><label>Notas previas (opcional)</label><textarea id="m-notas" rows="3" placeholder="Lo que ya sabés de esta persona..."></textarea></div>
+    </div>
+    <div class="modal-ft">
+      <button class="btn btn-sec" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-pri" onclick="agregarPersona()">Crear ficha</button>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div>
+    <h1>Fichas de Sesión Individual</h1>
+    <p>Programa Mandos Medios · Maran Suites &amp; Towers · SAS Consultora</p>
+  </div>
+  <div class="hbtns">
+    <span class="pending-dot" id="pendingDot" title="Cambios sin guardar"></span>
+    <button class="hbtn hbtn-sec" onclick="openModal()">+ Nueva persona</button>
+    <input type="file" id="fileInput" accept=".json" onchange="importar(event)">
+    <button class="hbtn hbtn-sec" onclick="document.getElementById('fileInput').click()">↑ Importar JSON</button>
+    <button class="hbtn hbtn-sec" onclick="exportar()">↓ Exportar JSON</button>
+    <button class="hbtn hbtn-sec" onclick="exportarTodoPDF()">⬇ PDF completo</button>
+    <button class="hbtn hbtn-sec" onclick="exportarTodoWord()">⬇ Word completo</button>
+    <button class="hbtn hbtn-pri" id="saveBtn" onclick="guardar()">Guardar</button>
+  </div>
+</header>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar"></nav>
+
+  <!-- MAIN CONTENT -->
+  <div class="main" id="mainArea"></div>
+
+</div>
+
+<script>
+// ================================================================
+// CONSTANTES
+// ================================================================
+const STORAGE_KEY = 'maran_fichas_v4';
+const V3_KEY = 'maran_fichas_v3';
+
+const QUESTIONS = [
+  '¿Cómo describirías tu rol acá? No el título, sino lo que vos sentís que hacés realmente todos los días.',
+  '¿Qué es lo que más te cuesta de liderar o coordinar a tu equipo?',
+  '¿Hay algo que sentís que podrías hacer mejor en tu trabajo y que todavía no encontraste cómo?',
+  '¿Qué esperás de este proceso? ¿Qué tendría que pasar para que dentro de 6 meses sientas que valió la pena?'
+];
+
+const EXTRA_COLORS = ['#5B4A8A','#1A5A6A','#6A4A1A','#2A5A3A','#8A2A5A'];
+
+const DEFAULT_PERSONAS = [
+  {
+    id:'diego', nombre:'Diego Beber', puesto:'Chef Ejecutivo', sector:'AAyBB — Cocina',
+    reporte:'Gte AAyBB', color:'#7B1A2E', ini:'DB',
+    hip:'Tensión entre el hacer técnico y el liderar. Alta exigencia propia que puede dificultar la delegación. Posible aislamiento operativo respecto a otras áreas.',
+    obs:'¿Se percibe como líder o como el mejor técnico del grupo? ¿Delega o hace todo él? ¿Cómo habla de su equipo?',
+    comps:['Delegación','Comunicación con áreas','Gestión de equipo','Autoridad y rol','Organización operativa','Manejo de conflictos','Feedback al equipo','Gestión de costos','Visión estratégica','Motivación de equipo'],
+    focos:['Liderazgo personal','Comunicación entre áreas','Delegación efectiva','Gestión de equipo','Rol y autoridad','Organización del tiempo','Manejo de conflictos','Cultura de equipo'],
+    hints:['¿Se describe como técnico o como líder? ¿Qué tan cómodo está con su posición de mando?','¿Aparece la delegación? ¿Comunicación con otras áreas? ¿Habla de su equipo con empatía?','Nivel de autoconsciencia. ¿Nombra algo concreto o se cierra?','¿Tiene expectativas concretas? ¿Habla de él o del equipo?']
+  },
+  {
+    id:'helga', nombre:'Helga Solís', puesto:'Ejecutiva de Eventos', sector:'AAyBB — Eventos',
+    reporte:'Gte AAyBB', color:'#C8591A', ini:'HS',
+    hip:'Alta presión comercial combinada con coordinación interna de múltiples áreas. Posible tensión entre su rol de vendedora y el de organizadora.',
+    obs:'¿Cómo maneja la incertidumbre y los cambios de último momento? ¿Habla de los clientes con entusiasmo o con desgaste?',
+    comps:['Límites con clientes','Coordinación interna','Gestión comercial','Manejo de incertidumbre','Comunicación entre áreas','Planificación de eventos','Autonomía en decisiones','Manejo de conflictos','Visión estratégica','Proyecciones y reportes'],
+    focos:['Liderazgo personal','Comunicación entre áreas','Gestión comercial','Organización del tiempo','Rol y autoridad','Manejo de conflictos','Autonomía','Cultura de equipo'],
+    hints:['¿Se describe desde la venta o desde la coordinación? ¿Se percibe con autonomía o dependiente?','¿Menciona coordinación con cocina, salón, RRHH? ¿Expectativas del cliente vs. realidad del hotel?','¿Nombra algo vinculado a la venta, la gestión o el trabajo en equipo?','¿Sus expectativas son personales o laborales? ¿Habla de herramientas concretas?']
+  },
+  {
+    id:'matias', nombre:'Matías Sobrino', puesto:'Encargado de Restaurante', sector:'AAyBB — Salón',
+    reporte:'Gte AAyBB / Gte RRHH', color:'#3A5A7B', ini:'MS',
+    hip:'El rol más complejo en términos de liderazgo cotidiano: recibe, contiene, supervisa y responde todo al mismo tiempo. Probable modo reactivo más que anticipatorio.',
+    obs:'¿Cómo ejerce su autoridad? ¿Habla de su equipo con respeto o con distancia? ¿Tiene herramientas para gestionar el clima o lo lleva a puro instinto?',
+    comps:['Autoridad y rol','Clima de equipo','Anticipación vs. reacción','Coordinación con cocina','Evaluación de desempeño','Comunicación con RRHH','Manejo de conflictos','Estándares de servicio','Motivación de equipo','Delegación'],
+    focos:['Liderazgo personal','Comunicación entre áreas','Clima y cultura de equipo','Organización del tiempo','Rol y autoridad','Manejo de conflictos','Anticipación operativa','Feedback al equipo'],
+    hints:['¿Se describe como el que "resuelve todo" o como alguien que lidera un equipo? ¿Hay orgullo, agotamiento o ambas?','¿Aparece algo sobre consistencia del equipo, rotación, compromiso?','¿Nombra algo vinculado a evaluaciones de desempeño, comunicación con RRHH o gestión del clima?','¿Hay algo de crecimiento personal o solo expectativas operativas?']
+  },
+  {
+    id:'lucia', nombre:'Lucía', puesto:'Ejecutiva de Cuentas', sector:'Hospitalidad y Comercial',
+    reporte:'Gerencia General', color:'#2D6A4F', ini:'LC',
+    hip:'Rol de doble eje: comercial (ventas, ocupación, estrategia de paquetes) y hospitalidad (experiencia del huésped, fidelización). Alta exigencia en resultados combinada con sensibilidad de servicio — posible tensión entre ambos mundos.',
+    obs:'¿Se percibe más como vendedora o como referente de hospitalidad? ¿Cómo maneja la tensión entre los objetivos comerciales y la calidad del vínculo con el cliente? ¿Se siente apoyada por los otros sectores o trabaja sola?',
+    comps:['Visión estratégica','Gestión comercial','Coordinación entre áreas','Hospitalidad y servicio','Negociación y persuasión','Fidelización de clientes','Comunicación interna','Autonomía en decisiones','Análisis e indicadores','Liderazgo e influencia'],
+    focos:['Liderazgo personal','Gestión comercial','Comunicación entre áreas','Hospitalidad como diferencial','Organización del tiempo','Negociación','Autonomía','Visión estratégica'],
+    hints:['¿Se describe desde lo comercial o desde el servicio? ¿Cómo define lo que hace en el día a día real vs. lo que dice el perfil?','¿Dónde siente que se le complica más: en la coordinación interna, en el cumplimiento de objetivos, o en el vínculo con clientes?','¿Hay algo sobre la gestión de la información, los reportes, o el trabajo independiente que le cueste?','¿Qué resultado concreto esperaría ver en 6 meses? ¿Habla de logros comerciales, de vínculos, de reconocimiento, o de crecimiento personal?']
+  },
+  {
+    id:'gonzalo', nombre:'Gonzalo', puesto:'Gerente AAyBB', sector:'Alimentos, Bebidas y Eventos',
+    reporte:'Gerencia General', color:'#4A1B0C', ini:'GZ',
+    hip:'Es el jefe directo de Diego, Helga y Matías — lo que implica una triple responsabilidad de liderazgo sobre perfiles muy distintos. Su desafío probablemente no sea técnico sino de gestión humana: cómo sostener equipos con dinámicas y necesidades diferentes bajo un mismo paraguas de exigencia y estándares.',
+    obs:'¿Cómo describe su rol de líder frente a cada uno de sus tres reportes directos? ¿Tiene claridad sobre las diferencias de cada uno? ¿Delega con criterio o tiende a centralizar? ¿Cómo gestiona los conflictos entre áreas que él mismo coordina?',
+    comps:['Liderazgo de equipos diversos','Delegación con criterio','Gestión de conflictos entre áreas','Comunicación con Gerencia General','Visión estratégica del área','Feedback y desarrollo de personas','Coordinación operativa','Gestión de costos y resultados','Cultura de equipo','Toma de decisiones'],
+    focos:['Liderazgo integral','Gestión de equipos diversos','Delegación efectiva','Comunicación con gerencia','Desarrollo de personas','Manejo de conflictos entre áreas','Visión estratégica','Cultura y clima de área'],
+    hints:['¿Cómo describe su rol frente a sus tres reportes directos? ¿Los nombra individualmente o habla del área en general?','¿Cuál de los tres equipos (cocina, eventos, salón) le genera más tensión o demanda más energía? ¿Por qué?','¿Hay algo sobre cómo da feedback, cómo toma decisiones difíciles o cómo gestiona los roces entre áreas?','¿Qué tipo de líder quiere ser en 6 meses? ¿Habla de resultados, de equipo, o de su propio desarrollo?']
+  }
+];
+
+// ================================================================
+// ESTADO
+// ================================================================
+let data = { version: 4, personas: [], sesiones: {} };
+let currentView = 'dashboard'; // 'dashboard' | personaId
+let currentSessIdx = {};       // { personaId: index }
+let pendingChanges = false;
+
+// ================================================================
+// INIT & DATOS
+// ================================================================
+function emptySession(numero) {
+  return {
+    id: 's' + Date.now() + Math.random().toString(36).slice(2,6),
+    numero: numero || 1,
+    fecha: '', dur: '45', mod: '', animo: '',
+    previa: '', q1: '', q2: '', q3: '', q4: '',
+    fortalezas: '', cierre: '', proxima: '', tprox: '',
+    comps: [], tags: [], rat: { ap: 0, co: 0, en: 0 }
+  };
+}
+
+function init() {
+  loadData();
+  render();
+  // Auto-save reminder: warn before leaving if pending
+  window.addEventListener('beforeunload', e => {
+    if (pendingChanges) {
+      e.preventDefault();
+      e.returnValue = 'Tenés cambios sin guardar. ¿Salir igual?';
+    }
+  });
+  // Auto-save every 60s
+  setInterval(() => { if (pendingChanges) { saveData(); markSaved(); } }, 60000);
+}
+
+function loadData() {
+  // Try v4
+  try {
+    const raw4 = localStorage.getItem(STORAGE_KEY);
+    if (raw4) { data = JSON.parse(raw4); return; }
+  } catch(e) {}
+
+  // Try migrate from v3
+  try {
+    const raw3 = localStorage.getItem(V3_KEY);
+    if (raw3) {
+      const v3 = JSON.parse(raw3);
+      data.personas = v3.personas || DEFAULT_PERSONAS;
+      data.sesiones = {};
+      for (const [id, sess] of Object.entries(v3.datos || {})) {
+        if (sess) {
+          const hasContent = Object.entries(sess).some(([k,v]) =>
+            v && v !== '' && v !== '45' && k !== 'dur' &&
+            !(Array.isArray(v) && v.length === 0) &&
+            !(typeof v === 'object' && !Array.isArray(v) && Object.values(v).every(x => x === 0))
+          );
+          if (hasContent) {
+            data.sesiones[id] = [{ ...emptySession(1), ...sess, id: 's1', numero: 1 }];
+          }
+        }
+      }
+      saveData();
+      return;
+    }
+  } catch(e) {}
+
+  // Fresh
+  data.personas = DEFAULT_PERSONAS;
+  data.sesiones = {};
+  saveData();
+}
+
+function saveData() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function getPersona(pid) { return data.personas.find(p => p.id === pid); }
+function getSesiones(pid) { return data.sesiones[pid] || []; }
+function getCurIdx(pid) {
+  const sess = getSesiones(pid);
+  if (!sess.length) return -1;
+  const idx = currentSessIdx[pid];
+  if (idx === undefined || idx < 0) return sess.length - 1;
+  return Math.min(idx, sess.length - 1);
+}
+function getCurSession(pid) {
+  const idx = getCurIdx(pid);
+  return idx >= 0 ? getSesiones(pid)[idx] : null;
+}
+
+// ================================================================
+// CAMBIOS PENDIENTES
+// ================================================================
+function markPending() {
+  if (!pendingChanges) {
+    pendingChanges = true;
+    document.getElementById('pendingDot').classList.add('show');
+    document.getElementById('saveBtn').textContent = 'Guardar *';
+  }
+}
+function markSaved() {
+  pendingChanges = false;
+  document.getElementById('pendingDot').classList.remove('show');
+  document.getElementById('saveBtn').textContent = 'Guardar';
+}
+
+function guardar() {
+  saveData();
+  markSaved();
+  toast('✓ Guardado correctamente');
+}
+
+// ================================================================
+// NAVEGACIÓN
+// ================================================================
+function navigate(view) {
+  currentView = view;
+  render();
+  document.getElementById('mainArea').scrollTop = 0;
+}
+
+function switchSession(pid, idx) {
+  currentSessIdx[pid] = idx;
+  renderMain();
+}
+
+function newSession(pid) {
+  if (!data.sesiones[pid]) data.sesiones[pid] = [];
+  const num = data.sesiones[pid].length + 1;
+  data.sesiones[pid].push(emptySession(num));
+  currentSessIdx[pid] = data.sesiones[pid].length - 1;
+  saveData();
+  markSaved();
+  renderMain();
+  renderSidebar();
+  toast('✓ Sesión ' + num + ' creada');
+}
+
+// ================================================================
+// RENDER PRINCIPAL
+// ================================================================
+function render() {
+  renderSidebar();
+  renderMain();
+}
+
+function renderSidebar() {
+  const total = data.personas.reduce((a, p) => a + getSesiones(p.id).length, 0);
+  let html = `
+    <div class="sb-section">
+      <div class="sb-item ${currentView==='dashboard'?'active':''}" onclick="navigate('dashboard')">
+        <span class="sb-icon">🏠</span>
+        <span>Resumen general</span>
+        ${total > 0 ? `<span class="sb-badge">${total}</span>` : ''}
+      </div>
+    </div>
+    <div class="sb-section" style="border-top:1px solid var(--line);padding-top:10px">
+      <div class="sb-label">Participantes</div>`;
+
+  for (const p of data.personas) {
+    const n = getSesiones(p.id).length;
+    const active = currentView === p.id ? 'active' : '';
+    html += `
+      <div class="sb-item ${active}" onclick="navigate('${p.id}')">
+        <div class="sb-dot" style="background:${p.color}"></div>
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.nombre}</span>
+        ${n > 0 ? `<span class="sb-badge">${n}</span>` : ''}
+      </div>`;
+  }
+
+  html += `</div>
+    <div style="margin-top:auto;padding:12px 16px;font-size:10px;color:var(--mid);border-top:1px solid var(--line)">
+      Datos guardados en este navegador.<br>Exportá JSON para hacer backup.
+    </div>`;
+
+  document.getElementById('sidebar').innerHTML = html;
+}
+
+function renderMain() {
+  const main = document.getElementById('mainArea');
+  if (currentView === 'dashboard') {
+    main.innerHTML = buildDashboard();
+  } else {
+    const p = getPersona(currentView);
+    if (!p) { main.innerHTML = ''; return; }
+    main.innerHTML = buildPersonaView(p);
+  }
+}
+
+// ================================================================
+// DASHBOARD
+// ================================================================
+function buildDashboard() {
+  const total = data.personas.reduce((a, p) => a + getSesiones(p.id).length, 0);
+  const maxSess = Math.max(...data.personas.map(p => getSesiones(p.id).length), 1);
+
+  let cards = '';
+  for (const p of data.personas) {
+    const sess = getSesiones(p.id);
+    const last = sess[sess.length - 1];
+    const lastDate = last?.fecha ? fmtDate(last.fecha) : null;
+    const nextDate = last?.proxima ? fmtDate(last.proxima) : null;
+    const rat = last?.rat || null;
+    const avgRat = rat ? Math.round((rat.ap + rat.co + rat.en) / 3) : 0;
+    const stars = avgRat > 0
+      ? `<span style="color:#F5A623">${'★'.repeat(avgRat)}</span><span style="color:#ddd">${'★'.repeat(5-avgRat)}</span>`
+      : '<span style="color:#ddd">— sin eval.</span>';
+
+    cards += `
+    <div class="dash-card" onclick="navigate('${p.id}')">
+      <div class="card-bar" style="background:${p.color}"></div>
+      <div class="card-body">
+        <div class="card-ini" style="background:${p.color}">${p.ini}</div>
+        <div class="card-name">${p.nombre}</div>
+        <div class="card-role">${p.puesto}</div>
+        <div class="card-sector">${p.sector}</div>
+        <div class="card-stats">
+          <div class="card-stat"><strong>${sess.length}</strong>Sesión${sess.length !== 1 ? 'es' : ''}</div>
+          <div class="card-stat"><strong>${lastDate || '—'}</strong>Última</div>
+          <div class="card-stat" style="font-size:13px">${stars}</div>
+        </div>
+        ${nextDate ? `<div class="card-next">📅 Próxima: ${nextDate}</div>` : ''}
+        ${!sess.length ? `<div class="card-no-sess">Sin sesiones registradas aún</div>` : ''}
+      </div>
+    </div>`;
+  }
+
+  let progRows = data.personas.map(p => {
+    const n = getSesiones(p.id).length;
+    const pct = maxSess > 0 ? Math.round(n / maxSess * 100) : 0;
+    return `
+    <div class="prog-row">
+      <div class="prog-name">${p.nombre.split(' ')[0]}</div>
+      <div class="prog-bar-wrap"><div class="prog-bar" style="width:${pct}%;background:${p.color}"></div></div>
+      <div class="prog-n">${n} ses.</div>
+    </div>`;
+  }).join('');
+
+  return `
+  <div class="dash-wrap">
+    <div class="dash-title">Programa Mandos Medios</div>
+    <div class="dash-sub">Maran Suites &amp; Towers · ${data.personas.length} participantes · ${total} sesión${total !== 1 ? 'es' : ''} registrada${total !== 1 ? 's' : ''}</div>
+    <div class="dash-grid">${cards}</div>
+    <div class="dash-prog">
+      <h3>Avance de sesiones por participante</h3>
+      ${progRows}
+    </div>
+  </div>`;
+}
+
+// ================================================================
+// VISTA PERSONA
+// ================================================================
+function buildPersonaView(p) {
+  const sess = getSesiones(p.id);
+  const curIdx = getCurIdx(p.id);
+  const curSess = getCurSession(p.id);
+
+  // Session chips
+  let chips = '';
+  if (!sess.length) {
+    chips = `<span class="sess-empty-msg">Sin sesiones aún —</span>`;
+  } else {
+    sess.forEach((s, i) => {
+      const dateStr = s.fecha ? ' · ' + fmtDate(s.fecha) : '';
+      chips += `<div class="sess-chip ${i===curIdx?'active':''}" onclick="switchSession('${p.id}',${i})">Sesión ${s.numero}${dateStr}</div>`;
+    });
+  }
+
+  const form = curSess
+    ? buildSessionForm(p, curSess)
+    : `<div class="empty-state">
+        <div class="es-icon">📋</div>
+        <div class="es-title">Sin sesiones registradas</div>
+        <div class="es-sub">Comenzá creando la primera sesión con ${p.nombre.split(' ')[0]}</div>
+        <button class="es-btn" onclick="newSession('${p.id}')">+ Nueva sesión</button>
+      </div>`;
+
+  return `
+  <div class="persona-header">
+    <div class="p-ini" style="background:${p.color}">${p.ini}</div>
+    <div style="flex:1;min-width:0">
+      <div class="p-name">${p.nombre}</div>
+      <div class="p-sub">${p.puesto} · ${p.sector} · Reporta a: ${p.reporte}</div>
+    </div>
+    ${sess.length ? `<div class="p-badge">${sess.length} sesión${sess.length!==1?'es':''}</div>` : ''}
+  </div>
+  <div class="session-bar">
+    <span class="sess-label">Historial:</span>
+    ${chips}
+    <button class="sess-new" onclick="newSession('${p.id}')">+ Nueva sesión</button>
+  </div>
+  <div class="form-wrap" id="fw-${p.id}">${form}</div>`;
+}
+
+// ================================================================
+// FORMULARIO DE SESIÓN
+// ================================================================
+function buildSessionForm(p, s) {
+  const pid = p.id, sid = s.id;
+
+  // Competencias
+  const compsHtml = p.comps.map(c =>
+    `<div class="tag-item ${s.comps.includes(c)?'on':''}" onclick="toggleTag('${pid}','${sid}','comps','${c}',this)">${c}</div>`
+  ).join('');
+
+  // Focos
+  const focosHtml = p.focos.map(f =>
+    `<div class="tag-item ${s.tags.includes(f)?'on':''}" onclick="toggleTag('${pid}','${sid}','tags','${f}',this)">${f}</div>`
+  ).join('');
+
+  // Ratings
+  const ratDefs = [
+    { key:'ap', label:'Nivel de apertura' },
+    { key:'co', label:'Confianza generada' },
+    { key:'en', label:'Entusiasmo con el proceso' }
+  ];
+  const ratsHtml = ratDefs.map(({key, label}) => {
+    const val = s.rat?.[key] || 0;
+    const starsHtml = [1,2,3,4,5].map(n =>
+      `<span class="star ${n<=val?'on':''}" onclick="setRat('${pid}','${sid}','${key}',${n},this)">★</span>`
+    ).join('');
+    return `<div class="rat-row">
+      <div class="rat-label">${label}</div>
+      <div class="stars">${starsHtml}</div>
+      <div class="rat-val" id="rv-${pid}-${key}">${val||''}</div>
+    </div>`;
+  }).join('');
+
+  // Q&A
+  const qasHtml = QUESTIONS.map((q, i) => `
+    <div class="qa-item">
+      <div class="qa-q">"${q}"</div>
+      <div class="qa-hint">🔍 ${p.hints[i] || ''}</div>
+      <textarea placeholder="Respuesta y observaciones..." oninput="sf('${pid}','${sid}','q${i+1}',this.value)">${s['q'+(i+1)]||''}</textarea>
+    </div>`
+  ).join('');
+
+  return `
+  <div class="section">
+    <div class="section-hd">📅 Datos de la sesión</div>
+    <div class="section-bd">
+      <div class="fields-row">
+        <div class="field"><label>Fecha</label>
+          <input type="date" value="${s.fecha||''}" oninput="sf('${pid}','${sid}','fecha',this.value);updateSessChip('${pid}')">
+        </div>
+        <div class="field"><label>Duración (min)</label>
+          <input type="number" value="${s.dur||45}" placeholder="45" oninput="sf('${pid}','${sid}','dur',this.value)">
+        </div>
+        <div class="field"><label>Modalidad</label>
+          <select onchange="sf('${pid}','${sid}','mod',this.value)">
+            <option value="">Seleccionar</option>
+            ${['Presencial','Online'].map(o=>`<option ${s.mod===o?'selected':''}>${o}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field"><label>Estado de ánimo al inicio</label>
+          <select onchange="sf('${pid}','${sid}','animo',this.value)">
+            <option value="">Seleccionar</option>
+            ${['Muy abierto / predispuesto','Neutral / expectante','Reservado / con dudas','Tenso / resistente']
+              .map(o=>`<option ${s.animo===o?'selected':''}>${o}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-hd">💡 Hipótesis pre-sesión</div>
+    <div class="section-bd">
+      <div class="hyp-box">
+        <div class="hyp-label">Foco probable</div>
+        <div class="hyp-text">${p.hip}</div>
+      </div>
+      <div class="obs-box">
+        <div class="obs-label">Punto de observación</div>
+        <div class="obs-text">${p.obs}</div>
+      </div>
+      <div class="field" style="margin-top:10px">
+        <label>Nota previa personal</label>
+        <textarea placeholder="Anotá lo que querés tener presente antes de entrar..." oninput="sf('${pid}','${sid}','previa',this.value)">${s.previa||''}</textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-hd">💬 Preguntas y respuestas</div>
+    <div class="section-bd">${qasHtml}</div>
+  </div>
+
+  <div class="section">
+    <div class="section-hd">🔎 Diagnóstico de sesión</div>
+    <div class="section-bd">
+      <div class="field" style="margin-bottom:14px">
+        <label>Fortalezas identificadas</label>
+        <textarea placeholder="¿Qué recursos propios aparecieron? ¿Qué lo/la mueve?" oninput="sf('${pid}','${sid}','fortalezas',this.value)">${s.fortalezas||''}</textarea>
+      </div>
+      <label style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;color:var(--mid);display:block;margin-bottom:6px">Áreas de desarrollo prioritarias</label>
+      <div class="tag-grid">${compsHtml}</div>
+      <label style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;color:var(--mid);display:block;margin:14px 0 6px">Foco para las próximas sesiones</label>
+      <div class="tag-grid">${focosHtml}</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-hd">⭐ Evaluación de la sesión</div>
+    <div class="section-bd">${ratsHtml}</div>
+  </div>
+
+  <div class="section">
+    <div class="section-hd">🤝 Cierre y próximos pasos</div>
+    <div class="section-bd">
+      <div class="fields-row">
+        <div class="field"><label>Fecha próxima sesión</label>
+          <input type="date" value="${s.proxima||''}" oninput="sf('${pid}','${sid}','proxima',this.value)">
+        </div>
+        <div class="field"><label>Tipo de próxima sesión</label>
+          <select onchange="sf('${pid}','${sid}','tprox',this.value)">
+            <option value="">Seleccionar</option>
+            ${['Individual','Grupal presencial','Grupal online'].map(o=>`<option ${s.tprox===o?'selected':''}>${o}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Acuerdos y foco próxima sesión</label>
+        <textarea placeholder="¿Qué acuerdos quedaron? ¿Qué vas a trabajar en la próxima sesión?" oninput="sf('${pid}','${sid}','cierre',this.value)">${s.cierre||''}</textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="print-btn-row" style="display:flex;justify-content:flex-end;gap:8px;padding:4px 0 12px">
+    <button class="btn btn-sec" onclick="printSession('${pid}','${sid}')">🖨 Imprimir esta sesión</button>
+    <button class="btn btn-pri" onclick="guardar()">Guardar</button>
+  </div>`;
+}
+
+// ================================================================
+// ACTUALIZACIONES DE CAMPO
+// ================================================================
+function sf(pid, sid, field, value) {
+  const sess = data.sesiones[pid];
+  if (!sess) return;
+  const s = sess.find(x => x.id === sid);
+  if (!s) return;
+  s[field] = value;
+  saveData();
+  markPending();
+}
+
+function toggleTag(pid, sid, listKey, value, el) {
+  const sess = data.sesiones[pid]?.find(x => x.id === sid);
+  if (!sess) return;
+  const arr = sess[listKey];
+  const idx = arr.indexOf(value);
+  if (idx >= 0) arr.splice(idx, 1); else arr.push(value);
+  el.classList.toggle('on');
+  saveData();
+  markPending();
+}
+
+function setRat(pid, sid, key, val, starEl) {
+  const sess = data.sesiones[pid]?.find(x => x.id === sid);
+  if (!sess) return;
+  if (!sess.rat) sess.rat = { ap:0, co:0, en:0 };
+  sess.rat[key] = val;
+  // Update stars
+  const container = starEl.parentNode;
+  container.querySelectorAll('.star').forEach((s, i) => s.classList.toggle('on', i < val));
+  const rvEl = document.getElementById(`rv-${pid}-${key}`);
+  if (rvEl) rvEl.textContent = val;
+  saveData();
+  markPending();
+}
+
+function updateSessChip(pid) {
+  // Refresh session bar chips after date change
+  const sess = getCurSession(pid);
+  if (!sess) return;
+  const idx = getCurIdx(pid);
+  const allSess = getSesiones(pid);
+  document.querySelectorAll('.sess-chip').forEach((chip, i) => {
+    const dateStr = allSess[i]?.fecha ? ' · ' + fmtDate(allSess[i].fecha) : '';
+    chip.textContent = `Sesión ${allSess[i]?.numero || (i+1)}${dateStr}`;
+  });
+}
+
+// ================================================================
+// IMPRIMIR / PDF
+// ================================================================
+function printSession(pid, sid) {
+  window.print();
+}
+
+// ================================================================
+// EXPORTAR PDF / WORD COMPLETO
+// ================================================================
+function buildExportHTML() {
+  const personas = data.personas;
+  if (!personas.length) return null;
+
+  const ratingLabel = v => v ? '★'.repeat(v) + '☆'.repeat(5 - v) : '—';
+  const qs = [
+    '¿Cómo describirías tu rol acá?',
+    '¿Qué es lo que más te cuesta de liderar o coordinar?',
+    '¿Hay algo que podrías hacer mejor?',
+    '¿Qué esperás de este proceso?'
+  ];
+
+  let html = `<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
+<title>Fichas Maran</title>
+<style>
+  body{font-family:Arial,sans-serif;font-size:12px;color:#1A1410;line-height:1.55;margin:0;padding:20px}
+  h1{font-size:20px;color:#7B1A2E;margin:0 0 4px}
+  .sub{font-size:10px;color:#5A4A3A;text-transform:uppercase;letter-spacing:.5px;margin-bottom:32px}
+  .persona-section{page-break-before:always;margin-bottom:40px}
+  .persona-section:first-child{page-break-before:auto}
+  .persona-hd{border-bottom:3px solid;padding-bottom:10px;margin-bottom:18px}
+  .persona-name{font-size:17px;font-weight:bold}
+  .persona-info{font-size:11px;color:#5A4A3A;margin-top:3px}
+  .session{margin-bottom:24px;border:1px solid #E2D9CF;border-radius:4px;overflow:hidden;page-break-inside:avoid}
+  .sess-hd{padding:9px 14px;font-weight:bold;font-size:12px;background:#F7F3EE;border-bottom:1px solid #E2D9CF}
+  .sess-bd{padding:14px}
+  .sec{font-size:10px;font-weight:bold;text-transform:uppercase;letter-spacing:.6px;color:#5A4A3A;border-bottom:1px solid #E2D9CF;padding-bottom:3px;margin:12px 0 7px}
+  .fl{font-size:10px;color:#5A4A3A;font-weight:bold;text-transform:uppercase}
+  .stars{color:#F5A623}
+  .no-sess{font-style:italic;color:#888;padding:16px;text-align:center}
+  @media print{
+    body{padding:0}
+    .persona-section{page-break-before:always}
+    .persona-section:first-child{page-break-before:auto}
+    @page{margin:15mm}
+  }
+</style></head><body>`;
+
+  html += `<h1>Fichas de Sesión Individual</h1>
+<div class="sub">Programa Mandos Medios · Maran Suites &amp; Towers · SAS Consultora · ${new Date().toLocaleDateString('es-AR')}</div>`;
+
+  personas.forEach(p => {
+    const sesiones = data.sesiones[p.id] || [];
+    html += `<div class="persona-section">
+<div class="persona-hd" style="border-color:${p.color}">
+  <div class="persona-name" style="color:${p.color}">${p.nombre}</div>
+  <div class="persona-info">${p.puesto} · ${p.sector} · Reporta a: ${p.reporte}</div>
+  ${p.hip && p.hip !== '—' ? `<div class="persona-info" style="margin-top:6px"><strong>Hipótesis inicial:</strong> ${p.hip}</div>` : ''}
+  ${p.obs && p.obs !== '—' ? `<div class="persona-info" style="margin-top:3px"><strong>Observaciones:</strong> ${p.obs}</div>` : ''}
+</div>`;
+
+    if (!sesiones.length) {
+      html += `<div class="no-sess">Sin sesiones registradas</div>`;
+    } else {
+      sesiones.forEach(s => {
+        const fecha = s.fecha ? fmtDate(s.fecha) : '—';
+        const dur = s.dur ? `${s.dur} min` : '—';
+        const mod = s.mod || '—';
+        html += `<div class="session">
+<div class="sess-hd">Sesión ${s.numero || 1} &nbsp;·&nbsp; ${fecha} &nbsp;·&nbsp; ${dur} &nbsp;·&nbsp; ${mod}</div>
+<div class="sess-bd">`;
+
+        if (s.animo) html += `<div style="margin-bottom:8px"><span class="fl">Estado anímico: </span>${s.animo}</div>`;
+        if (s.previa) html += `<div class="sec">Lectura y notas previas</div><div style="margin-bottom:8px">${s.previa}</div>`;
+
+        const hasQ = [s.q1, s.q2, s.q3, s.q4].some(a => a && a.trim());
+        if (hasQ) {
+          html += `<div class="sec">Preguntas de exploración</div>`;
+          [s.q1, s.q2, s.q3, s.q4].forEach((a, i) => {
+            if (a && a.trim()) html += `<div style="margin-bottom:8px"><div class="fl">${qs[i]}</div><div style="margin-top:2px">${a}</div></div>`;
+          });
+        }
+
+        if (s.fortalezas) html += `<div class="sec">Fortalezas observadas</div><div style="margin-bottom:8px">${s.fortalezas}</div>`;
+        if (s.cierre) html += `<div class="sec">Compromisos y cierre</div><div style="margin-bottom:8px">${s.cierre}</div>`;
+        if (s.proxima) {
+          html += `<div class="sec">Próxima sesión</div><div style="margin-bottom:4px">${s.proxima}</div>`;
+          if (s.tprox) html += `<div style="color:#5A4A3A;font-size:11px">Fecha tentativa: ${fmtDate(s.tprox)}</div>`;
+        }
+        if (s.comps && s.comps.length) html += `<div class="sec">Competencias trabajadas</div><div style="margin-bottom:6px">${s.comps.join(' · ')}</div>`;
+        if (s.tags && s.tags.length) html += `<div style="margin-bottom:6px"><span class="fl">Focos: </span>${s.tags.join(' · ')}</div>`;
+
+        const rat = s.rat || {};
+        if (rat.ap || rat.co || rat.en) {
+          html += `<div class="sec">Valoración de la sesión</div>
+<div><span class="fl">Apertura: </span><span class="stars">${ratingLabel(rat.ap)}</span></div>
+<div><span class="fl">Compromiso: </span><span class="stars">${ratingLabel(rat.co)}</span></div>
+<div><span class="fl">Energía: </span><span class="stars">${ratingLabel(rat.en)}</span></div>`;
+        }
+
+        html += `</div></div>`;
+      });
+    }
+    html += `</div>`;
+  });
+
+  html += `</body></html>`;
+  return html;
+}
+
+function exportarTodoPDF() {
+  const personas = data.personas;
+  if (!personas.length) { toast('No hay fichas para exportar'); return; }
+  const html = buildExportHTML();
+  const w = window.open('', '_blank');
+  if (!w) { toast('Activá popups para exportar'); return; }
+  w.document.write(html);
+  w.document.close();
+  setTimeout(() => { w.focus(); w.print(); }, 600);
+  toast('Se abrió la vista de impresión — guardá como PDF');
+}
+
+function exportarTodoWord() {
+  const personas = data.personas;
+  if (!personas.length) { toast('No hay fichas para exportar'); return; }
+  const html = buildExportHTML();
+  const blob = new Blob([html], { type: 'application/msword' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'fichas_maran_' + new Date().toISOString().slice(0,10) + '.doc';
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('✓ Archivo Word descargado');
+}
+
+// ================================================================
+// EXPORTAR / IMPORTAR
+// ================================================================
+function exportar() {
+  const json = JSON.stringify(data, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'fichas_maran_' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('✓ Archivo exportado');
+}
+
+function importar(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const imp = JSON.parse(ev.target.result);
+      if (imp.personas) {
+        if (imp.version === 4 && imp.sesiones) {
+          data = imp;
+        } else if (imp.datos) {
+          // v3
+          data.personas = imp.personas;
+          data.sesiones = {};
+          for (const [id, sess] of Object.entries(imp.datos || {})) {
+            if (sess) data.sesiones[id] = [{ ...emptySession(1), ...sess, id:'s1', numero:1 }];
+          }
+          data.version = 4;
+        }
+        saveData();
+        markSaved();
+        currentView = 'dashboard';
+        render();
+        toast('✓ Datos importados correctamente');
+      } else {
+        alert('El archivo no tiene el formato esperado.');
+      }
+    } catch(err) {
+      alert('Error al leer el archivo. Verificá que sea un JSON válido.');
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
+// ================================================================
+// MODAL NUEVA PERSONA
+// ================================================================
+function openModal() {
+  document.getElementById('modal').style.display = 'flex';
+  setTimeout(() => document.getElementById('m-nombre').focus(), 100);
+}
+function closeModal() {
+  document.getElementById('modal').style.display = 'none';
+  ['m-nombre','m-puesto','m-sector','m-reporte','m-notas'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+}
+function agregarPersona() {
+  const nombre = document.getElementById('m-nombre').value.trim();
+  if (!nombre) { document.getElementById('m-nombre').focus(); return; }
+  const words = nombre.split(' ').filter(Boolean);
+  const ini = words.map(w => w[0]).join('').toUpperCase().slice(0, 2);
+  const color = EXTRA_COLORS[data.personas.length % EXTRA_COLORS.length];
+  const id = 'p' + Date.now();
+  const notas = document.getElementById('m-notas').value.trim();
+  data.personas.push({
+    id, nombre, ini, color,
+    puesto: document.getElementById('m-puesto').value.trim() || '—',
+    sector: document.getElementById('m-sector').value.trim() || '—',
+    reporte: document.getElementById('m-reporte').value.trim() || '—',
+    hip: notas || '—',
+    obs: '—',
+    comps: ['Liderazgo','Comunicación','Delegación','Gestión de equipo','Manejo de conflictos'],
+    focos: ['Liderazgo personal','Comunicación entre áreas','Organización del tiempo'],
+    hints: ['','','','']
+  });
+  saveData();
+  closeModal();
+  currentView = id;
+  render();
+  toast('✓ ' + nombre + ' agregado/a');
+}
+
+// ================================================================
+// UTILS
+// ================================================================
+function fmtDate(d) {
+  if (!d) return '—';
+  const p = d.split('-');
+  return p.length === 3 ? `${p[2]}/${p[1]}/${p[0].slice(2)}` : d;
+}
+
+let toastTimer = null;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+// ================================================================
+// ARRANCAR
+// ================================================================
+init();
+</script>
+</body>
+</html>
