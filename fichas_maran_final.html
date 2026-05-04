@@ -208,6 +208,8 @@ input[type=file]{display:none}
     <input type="file" id="fileInput" accept=".json" onchange="importar(event)">
     <button class="hbtn hbtn-sec" onclick="document.getElementById('fileInput').click()">↑ Importar JSON</button>
     <button class="hbtn hbtn-sec" onclick="exportar()">↓ Exportar JSON</button>
+    <button class="hbtn hbtn-sec" onclick="exportarTodoPDF()">⬇ PDF completo</button>
+    <button class="hbtn hbtn-sec" onclick="exportarTodoWord()">⬇ Word completo</button>
     <button class="hbtn hbtn-pri" id="saveBtn" onclick="guardar()">Guardar</button>
   </div>
 </header>
@@ -777,8 +779,136 @@ function updateSessChip(pid) {
 // IMPRIMIR / PDF
 // ================================================================
 function printSession(pid, sid) {
-  // Temporarily show only this persona for print
   window.print();
+}
+
+// ================================================================
+// EXPORTAR PDF / WORD COMPLETO
+// ================================================================
+function buildExportHTML() {
+  const personas = data.personas;
+  if (!personas.length) return null;
+
+  const ratingLabel = v => v ? '★'.repeat(v) + '☆'.repeat(5 - v) : '—';
+  const qs = [
+    '¿Cómo describirías tu rol acá?',
+    '¿Qué es lo que más te cuesta de liderar o coordinar?',
+    '¿Hay algo que podrías hacer mejor?',
+    '¿Qué esperás de este proceso?'
+  ];
+
+  let html = `<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
+<title>Fichas Maran</title>
+<style>
+  body{font-family:Arial,sans-serif;font-size:12px;color:#1A1410;line-height:1.55;margin:0;padding:20px}
+  h1{font-size:20px;color:#7B1A2E;margin:0 0 4px}
+  .sub{font-size:10px;color:#5A4A3A;text-transform:uppercase;letter-spacing:.5px;margin-bottom:32px}
+  .persona-section{page-break-before:always;margin-bottom:40px}
+  .persona-section:first-child{page-break-before:auto}
+  .persona-hd{border-bottom:3px solid;padding-bottom:10px;margin-bottom:18px}
+  .persona-name{font-size:17px;font-weight:bold}
+  .persona-info{font-size:11px;color:#5A4A3A;margin-top:3px}
+  .session{margin-bottom:24px;border:1px solid #E2D9CF;border-radius:4px;overflow:hidden;page-break-inside:avoid}
+  .sess-hd{padding:9px 14px;font-weight:bold;font-size:12px;background:#F7F3EE;border-bottom:1px solid #E2D9CF}
+  .sess-bd{padding:14px}
+  .sec{font-size:10px;font-weight:bold;text-transform:uppercase;letter-spacing:.6px;color:#5A4A3A;border-bottom:1px solid #E2D9CF;padding-bottom:3px;margin:12px 0 7px}
+  .fl{font-size:10px;color:#5A4A3A;font-weight:bold;text-transform:uppercase}
+  .stars{color:#F5A623}
+  .no-sess{font-style:italic;color:#888;padding:16px;text-align:center}
+  @media print{
+    body{padding:0}
+    .persona-section{page-break-before:always}
+    .persona-section:first-child{page-break-before:auto}
+    @page{margin:15mm}
+  }
+</style></head><body>`;
+
+  html += `<h1>Fichas de Sesión Individual</h1>
+<div class="sub">Programa Mandos Medios · Maran Suites &amp; Towers · SAS Consultora · ${new Date().toLocaleDateString('es-AR')}</div>`;
+
+  personas.forEach(p => {
+    const sesiones = data.sesiones[p.id] || [];
+    html += `<div class="persona-section">
+<div class="persona-hd" style="border-color:${p.color}">
+  <div class="persona-name" style="color:${p.color}">${p.nombre}</div>
+  <div class="persona-info">${p.puesto} · ${p.sector} · Reporta a: ${p.reporte}</div>
+  ${p.hip && p.hip !== '—' ? `<div class="persona-info" style="margin-top:6px"><strong>Hipótesis inicial:</strong> ${p.hip}</div>` : ''}
+  ${p.obs && p.obs !== '—' ? `<div class="persona-info" style="margin-top:3px"><strong>Observaciones:</strong> ${p.obs}</div>` : ''}
+</div>`;
+
+    if (!sesiones.length) {
+      html += `<div class="no-sess">Sin sesiones registradas</div>`;
+    } else {
+      sesiones.forEach(s => {
+        const fecha = s.fecha ? fmtDate(s.fecha) : '—';
+        const dur = s.dur ? `${s.dur} min` : '—';
+        const mod = s.mod || '—';
+        html += `<div class="session">
+<div class="sess-hd">Sesión ${s.numero || 1} &nbsp;·&nbsp; ${fecha} &nbsp;·&nbsp; ${dur} &nbsp;·&nbsp; ${mod}</div>
+<div class="sess-bd">`;
+
+        if (s.animo) html += `<div style="margin-bottom:8px"><span class="fl">Estado anímico: </span>${s.animo}</div>`;
+        if (s.previa) html += `<div class="sec">Lectura y notas previas</div><div style="margin-bottom:8px">${s.previa}</div>`;
+
+        const hasQ = [s.q1, s.q2, s.q3, s.q4].some(a => a && a.trim());
+        if (hasQ) {
+          html += `<div class="sec">Preguntas de exploración</div>`;
+          [s.q1, s.q2, s.q3, s.q4].forEach((a, i) => {
+            if (a && a.trim()) html += `<div style="margin-bottom:8px"><div class="fl">${qs[i]}</div><div style="margin-top:2px">${a}</div></div>`;
+          });
+        }
+
+        if (s.fortalezas) html += `<div class="sec">Fortalezas observadas</div><div style="margin-bottom:8px">${s.fortalezas}</div>`;
+        if (s.cierre) html += `<div class="sec">Compromisos y cierre</div><div style="margin-bottom:8px">${s.cierre}</div>`;
+        if (s.proxima) {
+          html += `<div class="sec">Próxima sesión</div><div style="margin-bottom:4px">${s.proxima}</div>`;
+          if (s.tprox) html += `<div style="color:#5A4A3A;font-size:11px">Fecha tentativa: ${fmtDate(s.tprox)}</div>`;
+        }
+        if (s.comps && s.comps.length) html += `<div class="sec">Competencias trabajadas</div><div style="margin-bottom:6px">${s.comps.join(' · ')}</div>`;
+        if (s.tags && s.tags.length) html += `<div style="margin-bottom:6px"><span class="fl">Focos: </span>${s.tags.join(' · ')}</div>`;
+
+        const rat = s.rat || {};
+        if (rat.ap || rat.co || rat.en) {
+          html += `<div class="sec">Valoración de la sesión</div>
+<div><span class="fl">Apertura: </span><span class="stars">${ratingLabel(rat.ap)}</span></div>
+<div><span class="fl">Compromiso: </span><span class="stars">${ratingLabel(rat.co)}</span></div>
+<div><span class="fl">Energía: </span><span class="stars">${ratingLabel(rat.en)}</span></div>`;
+        }
+
+        html += `</div></div>`;
+      });
+    }
+    html += `</div>`;
+  });
+
+  html += `</body></html>`;
+  return html;
+}
+
+function exportarTodoPDF() {
+  const personas = data.personas;
+  if (!personas.length) { toast('No hay fichas para exportar'); return; }
+  const html = buildExportHTML();
+  const w = window.open('', '_blank');
+  if (!w) { toast('Activá popups para exportar'); return; }
+  w.document.write(html);
+  w.document.close();
+  setTimeout(() => { w.focus(); w.print(); }, 600);
+  toast('Se abrió la vista de impresión — guardá como PDF');
+}
+
+function exportarTodoWord() {
+  const personas = data.personas;
+  if (!personas.length) { toast('No hay fichas para exportar'); return; }
+  const html = buildExportHTML();
+  const blob = new Blob([html], { type: 'application/msword' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'fichas_maran_' + new Date().toISOString().slice(0,10) + '.doc';
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('✓ Archivo Word descargado');
 }
 
 // ================================================================
