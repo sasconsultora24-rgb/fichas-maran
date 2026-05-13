@@ -554,6 +554,10 @@ function renderSidebar() {
         <span>Resumen general</span>
         ${total > 0 ? `<span class="sb-badge">${total}</span>` : ''}
       </div>
+      <div class="sb-item ${currentView==='grupal'?'active':''}" onclick="navigate('grupal')">
+        <span class="sb-icon">📊</span>
+        <span>Análisis grupal</span>
+      </div>
     </div>
     <div class="sb-section" style="border-top:1px solid var(--line);padding-top:10px">
       <div class="sb-label">Participantes</div>`;
@@ -577,10 +581,151 @@ function renderSidebar() {
   document.getElementById('sidebar').innerHTML = html;
 }
 
+function buildGrupalView() {
+  return `
+  <div class="dash-wrap" style="max-width:820px">
+    <div class="dash-title">Análisis grupal</div>
+    <div class="dash-sub">Patrones identificados en las entrevistas individuales realizadas hasta ahora</div>
+
+    <div style="margin-bottom:20px;background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden">
+      <div style="background:var(--bur);padding:12px 18px;color:#fff;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.6px">Patrones dominantes — Dificultades</div>
+
+      <div style="padding:18px;border-bottom:1px solid var(--line)">
+        <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:10px">
+          <div style="background:#7B1A2E;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px;white-space:nowrap;flex-shrink:0">8 / 10</div>
+          <div>
+            <div style="font-weight:600;font-size:14px;margin-bottom:4px">Rol y apropiación del puesto</div>
+            <div style="font-size:11px;color:var(--mid);font-style:italic;margin-bottom:6px">El patrón más extendido — aparece en 8 de 10 perfiles</div>
+            <div style="font-size:13px;line-height:1.6;color:var(--dark)">La mayoría no tiene del todo claro qué se espera de ellos como mando medio. Algunos se identifican más con el rol técnico que con el de líder (Diego, Miguel, Diego Godoy). Otros no se han apropiado formalmente del cargo aunque ya lo ejercen de hecho (Jesica, Víctor). Matías directamente rechaza la palabra "encargado" y prefiere "líder", lo que muestra tensión con cómo fue nombrado.</div>
+            <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:5px">
+              ${['Diego B.','Matías','Jesica','Miguel','Diego G.','Víctor','Luciana','Nerina'].map(n=>`<span style="background:var(--tag);font-size:11px;padding:2px 8px;border-radius:10px;color:var(--mid)">${n}</span>`).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding:18px;border-bottom:1px solid var(--line)">
+        <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:10px">
+          <div style="background:#7B1A2E;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px;white-space:nowrap;flex-shrink:0">7 / 10</div>
+          <div>
+            <div style="font-weight:600;font-size:14px;margin-bottom:4px">Comunicación entre áreas y con superiores</div>
+            <div style="font-size:11px;color:var(--mid);font-style:italic;margin-bottom:6px">Presente en casi todos los perfiles, con distintas formas</div>
+            <div style="font-size:13px;line-height:1.6;color:var(--dark)">La falla de comunicación se manifiesta de varias maneras: falta de respuestas de otras áreas (Luciana), dificultad para expresarse (Jesica, Matías), comunicación unidireccional hacia abajo pero no hacia arriba (Diego B., Gonzalo), e incoherencias internas (Nerina menciona tiempos que no coinciden). Lucía señala que no recibe feedback claro de sus superiores sobre lo que se espera de ella.</div>
+            <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:5px">
+              ${['Diego B.','Matías','Jesica','Luciana','Lucía','Nerina','Gonzalo'].map(n=>`<span style="background:var(--tag);font-size:11px;padding:2px 8px;border-radius:10px;color:var(--mid)">${n}</span>`).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding:18px;border-bottom:1px solid var(--line)">
+        <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:10px">
+          <div style="background:#C8591A;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px;white-space:nowrap;flex-shrink:0">5 / 10</div>
+          <div>
+            <div style="font-weight:600;font-size:14px;margin-bottom:4px">Delegación — dificultad para soltar</div>
+            <div style="font-size:11px;color:var(--mid);font-style:italic;margin-bottom:6px">Más marcado en perfiles técnicos y en roles de alta carga</div>
+            <div style="font-size:13px;line-height:1.6;color:var(--dark)">La delegación aparece como dificultad explícita en varios perfiles. Diego B. controla desde la oficina pero no delega claramente. Nerina menciona "delegar" como área a mejorar. Miguel consulta antes de actuar (modo reactivo, no autónomo). Jesica carga con sobrecarga cuando falta su superior en vez de redistribuir. El patrón: hacen todo ellos antes que confiar en el equipo.</div>
+            <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:5px">
+              ${['Diego B.','Nerina','Miguel','Jesica','Diego G.'].map(n=>`<span style="background:var(--tag);font-size:11px;padding:2px 8px;border-radius:10px;color:var(--mid)">${n}</span>`).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding:18px;border-bottom:1px solid var(--line)">
+        <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:10px">
+          <div style="background:#C8591A;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px;white-space:nowrap;flex-shrink:0">4 / 10</div>
+          <div>
+            <div style="font-weight:600;font-size:14px;margin-bottom:4px">Manejo de conflictos y situaciones difíciles</div>
+            <div style="font-size:11px;color:var(--mid);font-style:italic;margin-bottom:6px">Evitación como respuesta predominante</div>
+            <div style="font-size:13px;line-height:1.6;color:var(--dark)">Helga no puede decir "no sé" sin sentir que pierde imagen. Le cuesta mucho el momento de conflicto y busca una herramienta para anclar la angustia. Lucía se define como intolerante pero tampoco sabe cómo manejar esa tensión. Matías pide ayuda cuando hay conflicto pero no tiene metodología propia. El patrón: enfrentamiento o huida, sin zona media de gestión asertiva.</div>
+            <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:5px">
+              ${['Helga','Lucía','Matías','Diego B.'].map(n=>`<span style="background:var(--tag);font-size:11px;padding:2px 8px;border-radius:10px;color:var(--mid)">${n}</span>`).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding:18px">
+        <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:10px">
+          <div style="background:#C8591A;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px;white-space:nowrap;flex-shrink:0">4 / 10</div>
+          <div>
+            <div style="font-weight:600;font-size:14px;margin-bottom:4px">Modo reactivo — sin anticipación operativa</div>
+            <div style="font-size:11px;color:var(--mid);font-style:italic;margin-bottom:6px">El día a día los come; no hay espacio para planificar</div>
+            <div style="font-size:13px;line-height:1.6;color:var(--dark)">Matías supervisa, pero más como respuesta que como anticipación. Miguel "prevé el día a día" pero igual consulta antes de decidir. Nerina improvisa la inducción según la agenda disponible y responsabiliza factores externos. Lucía menciona multitasking y dispersión como dificultad central. El patrón sistémico: el modo reactivo les impide liderar proactivamente.</div>
+            <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:5px">
+              ${['Matías','Miguel','Nerina','Lucía'].map(n=>`<span style="background:var(--tag);font-size:11px;padding:2px 8px;border-radius:10px;color:var(--mid)">${n}</span>`).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:20px;background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden">
+      <div style="background:var(--mid);padding:12px 18px;color:#fff;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.6px">Frecuencia de dificultades — mapa visual</div>
+      <div style="padding:18px">
+        ${[
+          ['Rol y apropiación','8 / 10',80],
+          ['Comunicación entre áreas','7 / 10',70],
+          ['Delegación','5 / 10',50],
+          ['Manejo de conflictos','4 / 10',40],
+          ['Modo reactivo','4 / 10',40],
+          ['Autoconsciencia / feedback','4 / 10',40],
+          ['Organización del tiempo','3 / 10',30],
+        ].map(([label,val,pct])=>`
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+            <div style="width:180px;font-size:12px;color:var(--mid);flex-shrink:0">${label}</div>
+            <div style="flex:1;background:var(--line);border-radius:4px;height:8px;overflow:hidden">
+              <div style="width:${pct}%;height:100%;background:var(--bur);border-radius:4px"></div>
+            </div>
+            <div style="width:44px;text-align:right;font-size:12px;font-weight:600;color:var(--dark);flex-shrink:0">${val}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+
+    <div style="margin-bottom:20px;background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden">
+      <div style="background:#2C5F2D;padding:12px 18px;color:#fff;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.6px">Patrones de posibilidad — lo que hay para trabajar</div>
+      <div style="padding:18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px">
+        ${[
+          ['Predisposición alta','7 de 10 llegaron con ánimo "muy abierto / predispuesto". Solo Luciana llegó reservada. Nerina y Lucía, neutral. Es un punto de partida sólido — el programa tiene legitimidad desde adentro.'],
+          ['Potencial de liderazgo no explotado','Helga tiene potencial claro pero no puede verlo. Víctor está en plan de carrera. Luciana es decidida y capacitada. El grupo tiene más de lo que cree — necesitan espejo, no contenido.'],
+          ['Querer mejorar: necesidad genuina','Helga quiere sentirse más segura. Jesica quiere expresarse mejor. Lucía quiere entender su rol. Diego B. quiere aprender comunicación efectiva. La demanda de herramientas es real.'],
+          ['Identidad con el trabajo','Matías prefiere "líder" a "encargado". Diego B. innova y controla. Nerina tiene compromiso. Jesica tolera bien el error. Son personas que se identifican con lo que hacen.'],
+          ['Conciencia del problema','La mayoría puede nombrar qué le cuesta: delegación, comunicación, expresión, organización. Eso hace el trabajo más concreto — no hay que convencerlos de que hay algo para mejorar.'],
+        ].map(([t,d])=>`
+          <div style="background:var(--cream);border-radius:4px;padding:14px;border-left:3px solid #2C5F2D">
+            <div style="font-weight:600;font-size:13px;margin-bottom:6px;color:var(--dark)">${t}</div>
+            <div style="font-size:12px;line-height:1.6;color:var(--mid)">${d}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+
+    <div style="background:#fff;border:1px solid #F5C6CB;border-radius:4px;overflow:hidden">
+      <div style="background:#C0392B;padding:12px 18px;color:#fff;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.6px">⚠ Alertas para el proceso</div>
+      <div style="padding:18px;display:flex;flex-direction:column;gap:14px">
+        <div style="border-left:4px solid #C0392B;padding-left:14px">
+          <div style="font-weight:600;font-size:13px;margin-bottom:4px">Gonzalo — Gerente AAyBB</div>
+          <div style="font-size:13px;line-height:1.6;color:var(--dark)">Lidera con miedo, sentado en la oficina. Es el jefe directo de Diego B., Helga y Matías. Si Gonzalo no se mueve, el trabajo con sus tres reportes tiene techo bajo. Es el caso más estratégico del programa.</div>
+        </div>
+        <div style="border-left:4px solid #E67E22;padding-left:14px">
+          <div style="font-weight:600;font-size:13px;margin-bottom:4px">Luciana — Recepción</div>
+          <div style="font-size:13px;line-height:1.6;color:var(--dark)">Siente que no recibe feedback, y puede que no lo pida por temor a parecer débil. Su ánimo fue "reservado / con dudas". Necesita más tiempo para abrirse — la segunda sesión es clave.</div>
+        </div>
+        <div style="border-left:4px solid #E67E22;padding-left:14px">
+          <div style="font-weight:600;font-size:13px;margin-bottom:4px">Ezequiel Ramírez — Mantenimiento</div>
+          <div style="font-size:13px;line-height:1.6;color:var(--dark)">Sin datos de sesión. No hay registro de qué apareció. No se puede trabajar con hipótesis solamente — prioridad sesión individual lo antes posible.</div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
 function renderMain() {
   const main = document.getElementById('mainArea');
   if (currentView === 'dashboard') {
     main.innerHTML = buildDashboard();
+  } else if (currentView === 'grupal') {
+    main.innerHTML = buildGrupalView();
   } else {
     const p = getPersona(currentView);
     if (!p) { main.innerHTML = ''; return; }
