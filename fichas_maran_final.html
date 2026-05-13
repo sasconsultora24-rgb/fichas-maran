@@ -432,6 +432,18 @@ function mergeNewPersonas() {
       data.personas.push(p);
     }
   });
+  // Sync name, puesto, sector, ini, color from DEFAULT_PERSONAS (in case they changed)
+  DEFAULT_PERSONAS.forEach(def => {
+    const stored = data.personas.find(p => p.id === def.id);
+    if (stored) {
+      stored.nombre = def.nombre;
+      stored.puesto = def.puesto;
+      stored.sector = def.sector;
+      stored.ini = def.ini;
+      stored.color = def.color;
+      stored.reporte = def.reporte;
+    }
+  });
 }
 
 function loadData() {
