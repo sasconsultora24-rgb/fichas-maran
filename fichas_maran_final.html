@@ -98,69 +98,6 @@ select{cursor:pointer;-webkit-appearance:none;background-image:url("data:image/s
 
 /* HYPOTHESIS */
 .hyp-box{background:var(--tag);border-radius:2px;padding:11px 14px;margin-bottom:10px}
-
-/* ── VISTA GRUPAL ─────────────────────────────────────── */
-.grupal-wrap{padding:24px}
-.grupal-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:20px;flex-wrap:wrap}
-.grupal-title{font-family:'Playfair Display',serif;font-size:22px;color:var(--dark)}
-.grupal-sub{font-size:12px;color:var(--mid);margin-top:4px}
-.gr-tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-bottom:20px;flex-wrap:wrap}
-.gr-tab{padding:8px 14px;font-size:12px;font-weight:500;cursor:pointer;border:none;background:none;color:var(--mid);border-bottom:2px solid transparent;letter-spacing:0.3px;transition:all 0.15s;font-family:'DM Sans',sans-serif}
-.gr-tab:hover{color:var(--dark)}
-.gr-tab.active{color:var(--bur);border-bottom-color:var(--bur);font-weight:600}
-.gr-panel{display:none}.gr-panel.active{display:block}
-.gr-section-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.7px;color:var(--mid);margin:0 0 10px;opacity:0.7}
-.gr-card{background:#fff;border:1px solid var(--line);border-radius:4px;padding:14px 16px;margin-bottom:10px}
-.gr-card-hd{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px}
-.gr-icon{width:30px;height:30px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
-.gr-card-title{font-size:14px;font-weight:600;color:var(--dark);margin:0 0 2px}
-.gr-card-sub{font-size:11px;color:var(--mid)}
-.gr-card-body{font-size:13px;color:var(--mid);line-height:1.65}
-.gr-pills{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
-.gr-pill{font-size:11px;padding:3px 9px;border-radius:12px;font-weight:500;background:var(--tag);color:var(--mid)}
-.gr-pill.amber{background:#FEF3CD;color:#7A4800}
-.gr-pill.coral{background:#FDEEE8;color:#7A2E0E}
-.gr-pill.teal{background:#E2F4EE;color:#0A4E38}
-.gr-pill.purple{background:#EFEDFD;color:#3A3080}
-.gr-pill.blue{background:#E8F2FB;color:#0D3E6B}
-.gr-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.gr-bar-label{font-size:12px;color:var(--mid);width:160px;flex-shrink:0;text-align:right}
-.gr-bar-track{flex:1;height:7px;background:var(--line);border-radius:4px;overflow:hidden}
-.gr-bar-fill{height:100%;border-radius:4px}
-.gr-bar-count{font-size:11px;color:var(--mid);min-width:36px;text-align:right}
-.gr-two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
-.gr-mini{background:var(--tag);border-radius:4px;padding:11px 13px}
-.gr-mini-title{font-size:12px;font-weight:600;color:var(--dark);margin:0 0 5px}
-.gr-mini-body{font-size:12px;color:var(--mid);line-height:1.55;margin:0}
-.gr-alert{border-radius:4px;padding:11px 14px;margin-bottom:10px;border-left:3px solid;font-size:13px;color:var(--dark);line-height:1.6}
-.gr-alert.amber{background:#FEF8E7;border-color:#D4880A}
-.gr-alert.teal{background:#EAF6F1;border-color:#0F7A58}
-.gr-alert.coral{background:#FEF0EA;border-color:#C84A1E}
-.gr-encuentro{background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden;margin-bottom:12px}
-.gr-enc-hd{padding:11px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:8px}
-.gr-enc-title{font-size:13px;font-weight:600;color:var(--dark)}
-.gr-enc-date{font-size:11px;color:var(--mid)}
-.gr-enc-body{padding:12px 14px}
-.gr-enc-field{margin-bottom:10px}
-.gr-enc-field:last-child{margin-bottom:0}
-.gr-enc-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--mid);margin-bottom:4px;opacity:0.7}
-.gr-enc-val{font-size:13px;color:var(--dark);line-height:1.6}
-.gr-enc-empty{font-size:12px;color:var(--mid);font-style:italic}
-.gr-add-btn{padding:7px 14px;border-radius:2px;font-size:12px;font-weight:500;cursor:pointer;border:1px dashed var(--mid);background:transparent;color:var(--mid);transition:all 0.15s;font-family:'DM Sans',sans-serif;letter-spacing:0.3px}
-.gr-add-btn:hover{border-color:var(--bur);color:var(--bur)}
-.gr-form-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;z-index:200;display:none}
-.gr-form-overlay.open{display:flex}
-.gr-form-box{background:#fff;border-radius:4px;padding:24px;width:90%;max-width:560px;max-height:90vh;overflow-y:auto}
-.gr-form-title{font-family:'Playfair Display',serif;font-size:16px;margin-bottom:16px;color:var(--dark)}
-.gr-field{margin-bottom:12px}
-.gr-field label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;color:var(--mid);margin-bottom:4px}
-.gr-form-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
-.gr-btn-cancel{padding:7px 14px;border-radius:2px;font-size:12px;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--mid);font-family:'DM Sans',sans-serif}
-.gr-btn-save{padding:7px 14px;border-radius:2px;font-size:12px;font-weight:600;cursor:pointer;border:none;background:var(--bur);color:#fff;font-family:'DM Sans',sans-serif}
-.gr-btn-del{padding:7px 10px;border-radius:2px;font-size:12px;cursor:pointer;border:1px solid #e8c5c5;background:#fdf5f5;color:#9B2A3A;font-family:'DM Sans',sans-serif;margin-right:auto}
-.gr-pat-edit-btn{font-size:11px;padding:3px 8px;border-radius:2px;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--mid);font-family:'DM Sans',sans-serif;margin-left:auto;flex-shrink:0}
-.gr-pat-edit-btn:hover{border-color:var(--bur);color:var(--bur)}
-@media(max-width:600px){.gr-two-col{grid-template-columns:1fr}.gr-bar-label{width:110px}}
 .hyp-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.6px;color:var(--mid);margin-bottom:3px}
 .hyp-text{font-size:13px;color:var(--dark);line-height:1.55}
 .obs-box{background:#fff;border:1px solid var(--line);border-radius:2px;padding:10px 14px;margin-bottom:10px}
@@ -403,6 +340,51 @@ const DEFAULT_PERSONAS = [
     comps:['Orientación a ventas','Liderazgo del equipo de spa','Estándares de servicio al cliente','Gestión operativa del sector','Comunicación con Gerencia','Gestión de agenda y turnos','Control de stock y blancos','Coordinación interdepartamental','Autonomía en decisiones','Desarrollo del equipo'],
     focos:['Rol y autoridad','Gestión comercial','Liderazgo personal','Comunicación entre áreas','Gestión del equipo','Autonomía','Orientación a resultados','Equilibrio servicio-ventas'],
     hints:['¿Cómo describe su trabajo en un día típico? ¿Aparece más el rol de atención y servicio o el de ventas y resultados? ¿Cómo vive esa tensión?','¿Habla del equipo de profesionales del spa — turnos, supervisión, feedback? ¿O se describe principalmente desde sus propias tareas de recepción?','¿Qué es lo que más le exige el rol actualmente? ¿La gestión operativa (agenda, stock, pileta), la parte comercial o el liderazgo del equipo?','¿Qué espera de este proceso? ¿Habla de crecer dentro del spa, de consolidar el rol de mando medio, o de algo más amplio dentro del hotel?']
+  },
+  {
+    id:'ailin', nombre:'Ailin', puesto:'Administración Contable', sector:'Administración',
+    reporte:'Gerencia General / Directorio', color:'#1A5276', ini:'AI',
+    hip:'Rol técnico-financiero con alta exposición a los números y la operación diaria del hotel. Gestiona arqueos de caja, comprobantes, proveedores, impuestos y el vínculo con el estudio contable externo. También lleva el cuadro de "Hoteles Más Verdes" — un indicador de consumo ambiental. Posición con mucha responsabilidad operativa pero quizás poco reconocimiento visible dentro del hotel. Posible sensación de trabajo "invisible" o de ser el respaldo silencioso de toda la operación.',
+    obs:'¿Cómo vive la responsabilidad de manejar información financiera sensible del hotel? ¿Siente que su trabajo es valorado por el resto del hotel? ¿Cómo gestiona la relación con el estudio contable externo? ¿Tiene claridad sobre sus límites de autonomía para tomar decisiones?',
+    comps:['Control financiero diario','Arqueo de cajas','Gestión de proveedores y cuentas corrientes','Conciliaciones bancarias','Administración impositiva','Organización y orden documental','Comunicación con estudio contable','Autonomía operativa','Registro de sostenibilidad ambiental','Reporte a Gerencia'],
+    focos:['Rol y autoridad','Gestión de la información','Autonomía','Comunicación con Gerencia','Organización del tiempo','Visibilidad del aporte','Toma de decisiones','Gestión de vínculos externos'],
+    hints:['¿Cómo describe su trabajo? ¿Lo siente como un rol de control y orden o como un soporte estratégico para el hotel? ¿Siente que Gerencia valora lo que hace?','¿Cómo gestiona el vínculo con el estudio contable externo? ¿Hay fluidez, tensión, dependencia? ¿Se siente respaldada o sola ante esas decisiones?','¿Qué es lo más complejo de su día a día: el volumen de tareas, la presión impositiva, la coordinación con otras áreas o la falta de reconocimiento?','¿Qué espera de este proceso? ¿Habla de crecer dentro de Administración, de aprender nuevas herramientas o de algo más ligado al rol y al reconocimiento?']
+  },
+  {
+    id:'mcardozo', nombre:'Matías Cardozo', puesto:'Asistente de Supervisor de Recepción', sector:'Recepción',
+    reporte:'Jefa de Recepción / Gerencia General', color:'#2874A6', ini:'MC',
+    hip:'Perfil con rol intermedio claro: recepcionista senior que asume funciones de supervisión operativa cuando Luciana Lisma no está. El perfil lo plantea de forma explícita. Responsabilidad alta tanto en la atención al huésped como en la coordinación del equipo y la comunicación con Gerencia en situaciones críticas. Probable tensión entre ser parte del equipo y tener que supervisarlo en ciertos momentos.',
+    obs:'¿Cómo vive la transición entre recepcionista y supervisor según el turno? ¿Tiene claridad sobre cuándo actuar con autonomía y cuándo derivar a Gerencia? ¿Cómo es su relación con Luciana — la siente como jefa, como par, como referente?',
+    comps:['Check in y check out','Atención al huésped','Gestión de reservas','Cobros y caja','Supervisión en ausencia de Jefatura','Coordinación interdepartamental','Resolución de situaciones operativas','Comunicación con Gerencia','Manejo de cuentas corrientes','Trabajo en equipo'],
+    focos:['Rol y autoridad','Liderazgo situacional','Autonomía','Comunicación entre áreas','Gestión del equipo','Relación con Jefatura','Toma de decisiones','Organización del tiempo'],
+    hints:['¿Cómo describe su rol? ¿Se presenta como recepcionista, como asistente de supervisión o como algo intermedio? ¿Tiene claridad sobre lo que se espera de él?','¿Cómo vive los momentos en que Luciana no está y tiene que supervisar al equipo? ¿Lo siente como una oportunidad, como una carga o como algo natural?','¿Cómo es la relación con Luciana Lisma — aprende de ella, trabaja en paralelo, o siente que no hay demasiada diferencia en sus roles?','¿Qué espera de este proceso? ¿Habla de crecer hacia la Jefatura de Recepción o de consolidar lo que ya hace con más herramientas?']
+  },
+  {
+    id:'ana', nombre:'Ana Martínez', puesto:'Gobernanta Principal', sector:'Housekeeping',
+    reporte:'Gerente General', color:'#7D3C98', ini:'AM',
+    hip:'Gobernanta con más de 20 años en el hotel (desde 2005). Gestiona un equipo amplio — mucamas, valet, áreas públicas, lavadero y spa — con autonomía para compras, francos, vacaciones y capacitación. Es la referente directa de Jesica Bonilla. Larga trayectoria que puede generar tanto fortaleza como resistencia al cambio. Posible tensión entre el dominio profundo del puesto y la apertura a nuevas formas de liderazgo o gestión.',
+    obs:'¿Cómo describe su rol después de más de 20 años en el hotel? ¿Qué la sigue motivando? ¿Cómo gestiona un equipo tan grande? ¿Cómo ve a Jesica Bonilla — como apoyo, como futura sucesora o simplemente como personal a cargo?',
+    comps:['Supervisión general de Housekeeping','Gestión de equipo amplio','Control de calidad','Compras y stock de blancos','Administración de francos y vacaciones','Capacitación del personal','Coordinación interdepartamental','Relación con Gerencia','Liderazgo de largo plazo','Autonomía de gestión'],
+    focos:['Liderazgo personal','Gestión del equipo','Motivación y pertenencia','Organización del tiempo','Comunicación con Gerencia','Desarrollo del equipo','Adaptación al cambio','Visión de largo plazo'],
+    hints:['¿Cómo describe su trabajo hoy — qué es lo que más la ocupa en el día a día? ¿Qué es lo que más le gusta y qué es lo que más le pesa de liderar Housekeeping?','¿Cómo vive el liderazgo de un equipo tan grande y diverso? ¿Delega con facilidad o prefiere controlar de cerca? ¿Cómo gestiona los conflictos dentro del equipo?','¿Cómo ve a Jesica Bonilla en el equipo? ¿La considera preparada para crecer? ¿Habla de ella con orgullo, con preocupación o con distancia?','Después de 20 años en el hotel, ¿qué la motiva a seguir? ¿Qué espera de este proceso — nuevas herramientas, reconocimiento, o algo que todavía siente que le falta?']
+  },
+  {
+    id:'berta', nombre:'Berta', puesto:'Responsable de RRHH', sector:'Recursos Humanos',
+    reporte:'Gerente General / Directorio', color:'#B7950B', ini:'BE',
+    hip:'Responsable de un área de RRHH que el propio perfil define como "en construcción" — el objetivo explícito es consolidarla como tal. Gestiona desde ausentismo y altas/bajas hasta clima laboral y estructura salarial. Rol con alta visibilidad dentro del hotel y mucho contacto con todos los sectores. Posible tensión entre la amplitud de lo que se le pide y los recursos reales con los que cuenta para hacerlo.',
+    obs:'¿Qué tan consolidada siente el área de RRHH dentro del hotel? ¿Se percibe más como gestora de procesos o como referente de las personas? ¿Cómo vive la relación con Gerencia General? ¿Cómo es el trabajo conjunto con Marina?',
+    comps:['Gestión de clima laboral','Procesos de selección','Capacitación y desarrollo','Administración de personal','Estructura salarial','Comunicación interna','Relación con Gerencia','Resolución de conflictos','Consolidación del área RRHH','Liderazgo del equipo RRHH'],
+    focos:['Rol y autoridad','Construcción del área','Liderazgo personal','Comunicación con Gerencia','Gestión del equipo','Visión estratégica','Autonomía','Clima organizacional'],
+    hints:['¿Cómo describe el estado actual del área de RRHH? ¿Siente que está consolidada o todavía en proceso de construcción? ¿Qué es lo que le falta para llegar donde quiere?','¿Cómo vive el doble rol de gestora de procesos y referente de las personas del hotel? ¿Qué parte le resulta más natural y cuál más demandante?','¿Cómo es la relación con Marina — trabajan juntas, se complementan, hay dependencia mutua? ¿Cómo gestiona la delegación dentro del área?','¿Qué espera de este proceso? ¿Habla de herramientas concretas de RRHH, de posicionamiento dentro del hotel, o de su propio desarrollo como referente?']
+  },
+  {
+    id:'marina', nombre:'Marina Rico', puesto:'Auxiliar de Recursos Humanos', sector:'Recursos Humanos',
+    reporte:'Responsable de RRHH / Gerente General', color:'#1E8449', ini:'MR',
+    hip:'Auxiliar de RRHH con tareas operativas amplias y formación sólida (Tecnicatura en Turismo y en Gestión de RRHH). Cubre a la Responsable del área cuando es necesario. El volumen y la variedad de sus responsabilidades — selección, inducción, legajos, clima laboral, planillas del Ministerio — supera lo que suele esperarse de un perfil auxiliar. Posible tensión entre la amplitud real de sus tareas y el reconocimiento formal del cargo.',
+    obs:'¿Cómo siente que encaja su formación con las tareas que realiza? ¿Se percibe como auxiliar o como co-gestora del área? ¿Cómo es la relación con Berta — de aprendizaje, de trabajo conjunto o de mayor independencia? ¿Tiene ambición de crecer hacia la Responsabilidad del área?',
+    comps:['Búsqueda y selección de personal','Inducción de nuevos colaboradores','Gestión de legajos','Comunicación interna','Clima laboral','Administración de personal eventual','Planillas del Ministerio','Trabajo en equipo con Responsable','Diagnóstico organizacional','Capacitación continua'],
+    focos:['Rol y autoridad','Apropiación del puesto','Relación con la Responsable RRHH','Visión de desarrollo','Comunicación','Gestión operativa','Autonomía','Clima organizacional'],
+    hints:['¿Cómo describe su rol en el área de RRHH? ¿Se presenta como auxiliar, como parte del equipo de RRHH o algo más? ¿Siente que el cargo refleja lo que realmente hace?','¿Cómo es la relación con Berta — aprende de ella, trabajan en paralelo o siente que ya tiene bastante autonomía propia en sus tareas?','¿Qué es lo que más le gusta de trabajar en RRHH? ¿Y qué es lo más difícil — el volumen, la variedad, el contacto con conflictos o el reconocimiento?','¿Tiene aspiraciones de crecer hacia la Responsabilidad de RRHH? ¿Habla de formación, de herramientas nuevas o de algo más concreto que quiere lograr?']
   }
 ];
 
@@ -572,10 +554,6 @@ function renderSidebar() {
         <span>Resumen general</span>
         ${total > 0 ? `<span class="sb-badge">${total}</span>` : ''}
       </div>
-      <div class="sb-item ${currentView==='grupal'?'active':''}" onclick="navigate('grupal')">
-        <span class="sb-icon">👥</span>
-        <span>Análisis grupal</span>
-      </div>
     </div>
     <div class="sb-section" style="border-top:1px solid var(--line);padding-top:10px">
       <div class="sb-label">Participantes</div>`;
@@ -603,9 +581,6 @@ function renderMain() {
   const main = document.getElementById('mainArea');
   if (currentView === 'dashboard') {
     main.innerHTML = buildDashboard();
-  } else if (currentView === 'grupal') {
-    main.innerHTML = buildGrupalView();
-    initGrupalTabs();
   } else {
     const p = getPersona(currentView);
     if (!p) { main.innerHTML = ''; return; }
@@ -1150,429 +1125,6 @@ function toast(msg) {
   el.classList.add('show');
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => el.classList.remove('show'), 2800);
-}
-
-// ================================================================
-// DATOS GRUPALES (persisten en localStorage separado)
-// ================================================================
-function loadGrupalData() {
-  try {
-    const raw = localStorage.getItem('maran_grupal_v1');
-    if (raw) return JSON.parse(raw);
-  } catch(e) {}
-  return {
-    patrones: [
-      {
-        id: 'p1', tipo: 'dificultad',
-        titulo: 'Rol y apropiación del puesto',
-        subtitulo: 'Presente en 8 de 10 perfiles',
-        cuerpo: 'La mayoría no tiene claro qué se espera de ellos como mando medio más allá de lo operativo. Algunos se identifican más con el rol técnico (Diego B., Miguel, Diego G.). Otros no se apropiaron formalmente del cargo aunque ya lo ejercen (Jesica, Víctor). Matías rechaza la palabra "encargado" y prefiere "líder".',
-        personas: ['Diego B.','Matías','Jesica','Miguel','Diego G.','Víctor','Luciana','Nerina'],
-        color: 'amber'
-      },
-      {
-        id: 'p2', tipo: 'dificultad',
-        titulo: 'Comunicación entre áreas y con superiores',
-        subtitulo: 'Presente en 7 de 10 perfiles',
-        cuerpo: 'La falla de comunicación se manifiesta de varias formas: falta de respuestas de otras áreas (Luciana), dificultad para expresarse (Jesica, Matías), comunicación unidireccional (Diego B., Gonzalo), incoherencias internas (Nerina). Lucía señala que no recibe feedback claro de sus superiores.',
-        personas: ['Diego B.','Matías','Jesica','Luciana','Lucía','Nerina','Gonzalo'],
-        color: 'coral'
-      },
-      {
-        id: 'p3', tipo: 'dificultad',
-        titulo: 'Delegación — dificultad para soltar',
-        subtitulo: 'Más marcado en perfiles técnicos y roles de alta carga',
-        cuerpo: 'Diego B. controla desde la oficina pero no delega. Nerina nombra la delegación como área a mejorar. Miguel consulta antes de actuar (modo reactivo). Jesica absorbe la sobrecarga cuando falta su superior. El patrón: hacen todo ellos antes que confiar en el equipo.',
-        personas: ['Diego B.','Nerina','Miguel','Jesica','Diego G.'],
-        color: 'teal'
-      },
-      {
-        id: 'p4', tipo: 'dificultad',
-        titulo: 'Manejo de conflictos y situaciones difíciles',
-        subtitulo: 'Evitación como respuesta predominante',
-        cuerpo: 'Helga no puede decir "no sé" sin sentir que pierde imagen y busca una herramienta para el momento de angustia. Lucía se define como intolerante pero no sabe cómo gestionar esa tensión. Matías pide ayuda pero no tiene metodología. El patrón: enfrentamiento o huida, sin zona media asertiva.',
-        personas: ['Helga','Lucía','Matías','Diego B.'],
-        color: 'purple'
-      },
-      {
-        id: 'p5', tipo: 'dificultad',
-        titulo: 'Modo reactivo — sin anticipación operativa',
-        subtitulo: 'El día a día los come; no hay espacio para planificar',
-        cuerpo: 'Matías supervisa como respuesta, no como anticipación. Miguel prevé el día a día pero igual consulta antes de decidir. Nerina improvisa la inducción según la agenda disponible. Lucía menciona multitasking y dispersión como dificultad central. El modo reactivo les impide liderar proactivamente.',
-        personas: ['Matías','Miguel','Nerina','Lucía'],
-        color: 'blue'
-      },
-      {
-        id: 'p6', tipo: 'posibilidad',
-        titulo: 'Predisposición alta al proceso',
-        subtitulo: '7 de 10 llegaron muy abiertos / predispuestos',
-        cuerpo: 'Solo Luciana llegó reservada. Nerina y Lucía, neutral. Es un punto de partida sólido — el programa tiene legitimidad desde adentro. No hay que vender el proceso: ya está aceptado.',
-        personas: [],
-        color: 'teal'
-      },
-      {
-        id: 'p7', tipo: 'posibilidad',
-        titulo: 'Potencial de liderazgo no explotado',
-        subtitulo: 'El grupo tiene más de lo que cree',
-        cuerpo: 'Helga tiene potencial claro pero no puede verlo. Víctor está en plan de carrera documentado. Luciana es decidida y capacitada. Necesitan espejo, no contenido nuevo.',
-        personas: ['Helga','Víctor','Luciana'],
-        color: 'teal'
-      },
-      {
-        id: 'p8', tipo: 'alerta',
-        titulo: 'Gonzalo — caso estratégico del programa',
-        subtitulo: 'Lidera con miedo; jefe directo de Diego B., Helga y Matías',
-        cuerpo: 'Si Gonzalo no se mueve, el trabajo con sus tres reportes directos tiene techo bajo. Es el caso más estratégico: una sesión específica con él sobre cómo acompaña a su equipo puede multiplicar el impacto de todo lo que ya se está haciendo.',
-        personas: ['Gonzalo'],
-        color: 'amber'
-      }
-    ],
-    encuentros: []
-  };
-}
-
-function saveGrupalData(gd) {
-  localStorage.setItem('maran_grupal_v1', JSON.stringify(gd));
-}
-
-let grupalActiveTab = 'patrones';
-
-// ================================================================
-// VISTA GRUPAL — BUILD
-// ================================================================
-function buildGrupalView() {
-  const gd = loadGrupalData();
-  const dificultades = gd.patrones.filter(p => p.tipo === 'dificultad');
-  const posibilidades = gd.patrones.filter(p => p.tipo === 'posibilidad');
-  const alertas = gd.patrones.filter(p => p.tipo === 'alerta');
-  const enc = gd.encuentros || [];
-
-  // TABS
-  const tabsHtml = `
-  <div class="gr-tabs">
-    <button class="gr-tab ${grupalActiveTab==='patrones'?'active':''}" onclick="switchGrupalTab('patrones')">Patrones del grupo</button>
-    <button class="gr-tab ${grupalActiveTab==='encuentros'?'active':''}" onclick="switchGrupalTab('encuentros')">Encuentros grupales</button>
-    <button class="gr-tab ${grupalActiveTab==='frecuencia'?'active':''}" onclick="switchGrupalTab('frecuencia')">Mapa de frecuencias</button>
-  </div>`;
-
-  // PANEL PATRONES
-  function renderPatron(p) {
-    const pillsHtml = p.personas.length
-      ? p.personas.map(n => `<span class="gr-pill ${p.color}">${n}</span>`).join('')
-      : '';
-    return `
-    <div class="gr-card" id="grc-${p.id}">
-      <div class="gr-card-hd">
-        <div>
-          <div class="gr-card-title">${p.titulo}</div>
-          <div class="gr-card-sub">${p.subtitulo}</div>
-        </div>
-        <button class="gr-pat-edit-btn" onclick="openEditPatron('${p.id}')">Editar</button>
-      </div>
-      <div class="gr-card-body">${p.cuerpo}</div>
-      ${pillsHtml ? `<div class="gr-pills">${pillsHtml}</div>` : ''}
-    </div>`;
-  }
-
-  const patronesHtml = `
-  <div class="gr-panel ${grupalActiveTab==='patrones'?'active':''}" id="gp-patrones">
-    <div class="gr-section-title" style="display:flex;align-items:center;justify-content:space-between">
-      <span>Dificultades recurrentes</span>
-      <button class="gr-add-btn" onclick="openAddPatron('dificultad')">+ Agregar</button>
-    </div>
-    ${dificultades.map(renderPatron).join('')}
-    <div class="gr-section-title" style="margin-top:18px;display:flex;align-items:center;justify-content:space-between">
-      <span>Posibilidades del grupo</span>
-      <button class="gr-add-btn" onclick="openAddPatron('posibilidad')">+ Agregar</button>
-    </div>
-    ${posibilidades.map(renderPatron).join('')}
-    <div class="gr-section-title" style="margin-top:18px;display:flex;align-items:center;justify-content:space-between">
-      <span>Alertas estratégicas</span>
-      <button class="gr-add-btn" onclick="openAddPatron('alerta')">+ Agregar</button>
-    </div>
-    ${alertas.map(renderPatron).join('')}
-  </div>`;
-
-  // PANEL ENCUENTROS
-  function renderEncuentro(e, idx) {
-    return `
-    <div class="gr-encuentro">
-      <div class="gr-enc-hd">
-        <div>
-          <div class="gr-enc-title">Encuentro ${idx+1}${e.titulo ? ' · ' + e.titulo : ''}</div>
-          ${e.fecha ? `<div class="gr-enc-date">${fmtDate(e.fecha)}</div>` : ''}
-        </div>
-        <button class="gr-pat-edit-btn" onclick="openEditEncuentro(${idx})">Editar</button>
-      </div>
-      <div class="gr-enc-body">
-        ${e.asistentes ? `<div class="gr-enc-field"><div class="gr-enc-label">Asistentes</div><div class="gr-enc-val">${e.asistentes}</div></div>` : ''}
-        ${e.objetivo ? `<div class="gr-enc-field"><div class="gr-enc-label">Objetivo del encuentro</div><div class="gr-enc-val">${e.objetivo}</div></div>` : ''}
-        ${e.apertura ? `<div class="gr-enc-field"><div class="gr-enc-label">Ejercicio de apertura</div><div class="gr-enc-val">${e.apertura}</div></div>` : ''}
-        ${e.desarrollo ? `<div class="gr-enc-field"><div class="gr-enc-label">Desarrollo</div><div class="gr-enc-val">${e.desarrollo}</div></div>` : ''}
-        ${e.cierre ? `<div class="gr-enc-field"><div class="gr-enc-label">Cierre</div><div class="gr-enc-val">${e.cierre}</div></div>` : ''}
-        ${e.observaciones ? `<div class="gr-enc-field"><div class="gr-enc-label">Observaciones</div><div class="gr-enc-val">${e.observaciones}</div></div>` : ''}
-        ${e.proximoPaso ? `<div class="gr-enc-field"><div class="gr-enc-label">Próximo paso</div><div class="gr-enc-val">${e.proximoPaso}</div></div>` : ''}
-      </div>
-    </div>`;
-  }
-
-  const encuentrosHtml = `
-  <div class="gr-panel ${grupalActiveTab==='encuentros'?'active':''}" id="gp-encuentros">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-      <div class="gr-section-title" style="margin:0">${enc.length} encuentro${enc.length!==1?'s':''} registrado${enc.length!==1?'s':''}</div>
-      <button class="gr-add-btn" onclick="openAddEncuentro()">+ Nuevo encuentro</button>
-    </div>
-    ${enc.length ? enc.map(renderEncuentro).join('') : `<div style="text-align:center;padding:40px 20px;color:var(--mid);font-size:13px;font-style:italic">No hay encuentros registrados aún.<br>Usá el botón para agregar el primero.</div>`}
-  </div>`;
-
-  // PANEL FRECUENCIAS
-  const allDif = gd.patrones.filter(p => p.tipo==='dificultad');
-  const freqRows = allDif.map(p => {
-    const cnt = p.personas.length;
-    const max = 10;
-    const pct = Math.round(cnt/max*100);
-    const colors = {amber:'#D4880A',coral:'#C84A1E',teal:'#0F7A58',purple:'#534AB7',blue:'#185FA5'};
-    const fill = colors[p.color] || '#7B1A2E';
-    return `
-    <div class="gr-bar-row">
-      <span class="gr-bar-label">${p.titulo.length > 24 ? p.titulo.slice(0,24)+'…' : p.titulo}</span>
-      <div class="gr-bar-track"><div class="gr-bar-fill" style="width:${pct}%;background:${fill}"></div></div>
-      <span class="gr-bar-count">${cnt} / ${max}</span>
-    </div>`;
-  }).join('');
-
-  const frecuenciaHtml = `
-  <div class="gr-panel ${grupalActiveTab==='frecuencia'?'active':''}" id="gp-frecuencia">
-    <div class="gr-section-title">Frecuencia de dificultades sobre 10 participantes</div>
-    <div class="gr-card" style="margin-bottom:16px">
-      ${freqRows}
-    </div>
-    <div class="gr-section-title">Nota estratégica</div>
-    <div class="gr-alert amber">
-      El patrón central que une todo: la mayoría no tiene claro qué significa su rol más allá de lo operativo. No es falta de capacidad — es falta de marco. Antes de trabajar comunicación, delegación o conflictos, hay que resolver la pregunta de base: <strong>¿qué es un mando medio en este hotel?</strong>
-    </div>
-    <div class="gr-alert teal">
-      Lo que el grupo tiene a favor: predisposición altísima, identificación genuina con su trabajo, y capacidad de nombrar lo que les cuesta. No hay que convencerlos de que hay algo para mejorar — ya lo saben.
-    </div>
-  </div>`;
-
-  return `
-  <div class="grupal-wrap">
-    <div class="grupal-header">
-      <div>
-        <div class="grupal-title">Análisis grupal</div>
-        <div class="grupal-sub">Patrones, encuentros y mapa de frecuencias · ${gd.patrones.length} patrones · ${enc.length} encuentros</div>
-      </div>
-      <button class="hbtn hbtn-sec" onclick="exportGrupal()" style="background:var(--bur);color:#fff;border:none;margin-top:4px">⬇ Exportar grupal</button>
-    </div>
-    ${tabsHtml}
-    ${patronesHtml}
-    ${encuentrosHtml}
-    ${frecuenciaHtml}
-  </div>
-
-  <!-- MODAL PATRÓN -->
-  <div class="gr-form-overlay" id="gr-modal-patron">
-    <div class="gr-form-box">
-      <div class="gr-form-title" id="gr-modal-patron-title">Patrón</div>
-      <input type="hidden" id="gr-pat-id">
-      <input type="hidden" id="gr-pat-tipo">
-      <div class="gr-field"><label>Título</label><input type="text" id="gr-pat-titulo"></div>
-      <div class="gr-field"><label>Subtítulo / alcance</label><input type="text" id="gr-pat-subtitulo"></div>
-      <div class="gr-field"><label>Descripción</label><textarea id="gr-pat-cuerpo" rows="4" style="min-height:80px"></textarea></div>
-      <div class="gr-field"><label>Personas (separadas por coma)</label><input type="text" id="gr-pat-personas" placeholder="Diego B., Helga, Matías…"></div>
-      <div class="gr-field"><label>Color</label>
-        <select id="gr-pat-color">
-          <option value="amber">Amber (dificultades)</option>
-          <option value="coral">Coral</option>
-          <option value="teal">Teal (posibilidades)</option>
-          <option value="purple">Púrpura</option>
-          <option value="blue">Azul</option>
-        </select>
-      </div>
-      <div class="gr-form-btns">
-        <button class="gr-btn-del" id="gr-btn-del-patron" onclick="deletePatron()" style="display:none">Eliminar</button>
-        <button class="gr-btn-cancel" onclick="closeGrModalPatron()">Cancelar</button>
-        <button class="gr-btn-save" onclick="savePatron()">Guardar</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL ENCUENTRO -->
-  <div class="gr-form-overlay" id="gr-modal-encuentro">
-    <div class="gr-form-box">
-      <div class="gr-form-title">Encuentro grupal</div>
-      <input type="hidden" id="gr-enc-idx">
-      <div class="gr-field"><label>Título / nombre del encuentro</label><input type="text" id="gr-enc-titulo" placeholder="Ej: Liderazgo y rol"></div>
-      <div class="gr-field"><label>Fecha</label><input type="date" id="gr-enc-fecha"></div>
-      <div class="gr-field"><label>Asistentes</label><input type="text" id="gr-enc-asistentes" placeholder="Ej: Diego, Helga, Matías, Luciana…"></div>
-      <div class="gr-field"><label>Objetivo del encuentro</label><textarea id="gr-enc-objetivo" rows="2"></textarea></div>
-      <div class="gr-field"><label>Ejercicio de apertura</label><textarea id="gr-enc-apertura" rows="2"></textarea></div>
-      <div class="gr-field"><label>Desarrollo</label><textarea id="gr-enc-desarrollo" rows="3"></textarea></div>
-      <div class="gr-field"><label>Cierre</label><textarea id="gr-enc-cierre" rows="2"></textarea></div>
-      <div class="gr-field"><label>Observaciones</label><textarea id="gr-enc-observaciones" rows="2"></textarea></div>
-      <div class="gr-field"><label>Próximo paso</label><textarea id="gr-enc-proximoPaso" rows="2"></textarea></div>
-      <div class="gr-form-btns">
-        <button class="gr-btn-del" id="gr-btn-del-enc" onclick="deleteEncuentro()" style="display:none">Eliminar</button>
-        <button class="gr-btn-cancel" onclick="closeGrModalEncuentro()">Cancelar</button>
-        <button class="gr-btn-save" onclick="saveEncuentro()">Guardar</button>
-      </div>
-    </div>
-  </div>`;
-}
-
-function initGrupalTabs() {}
-
-function switchGrupalTab(tab) {
-  grupalActiveTab = tab;
-  document.querySelectorAll('.gr-tab').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.gr-panel').forEach(p => p.classList.remove('active'));
-  const btn = document.querySelector(`.gr-tab[onclick*="${tab}"]`);
-  if (btn) btn.classList.add('active');
-  const panel = document.getElementById('gp-' + tab);
-  if (panel) panel.classList.add('active');
-}
-
-// --- PATRONES CRUD ---
-function openAddPatron(tipo) {
-  const titles = {dificultad:'Nueva dificultad',posibilidad:'Nueva posibilidad',alerta:'Nueva alerta'};
-  document.getElementById('gr-modal-patron-title').textContent = titles[tipo] || 'Nuevo patrón';
-  document.getElementById('gr-pat-id').value = '';
-  document.getElementById('gr-pat-tipo').value = tipo;
-  document.getElementById('gr-pat-titulo').value = '';
-  document.getElementById('gr-pat-subtitulo').value = '';
-  document.getElementById('gr-pat-cuerpo').value = '';
-  document.getElementById('gr-pat-personas').value = '';
-  document.getElementById('gr-pat-color').value = tipo==='posibilidad'?'teal':tipo==='alerta'?'amber':'coral';
-  document.getElementById('gr-btn-del-patron').style.display = 'none';
-  document.getElementById('gr-modal-patron').classList.add('open');
-}
-
-function openEditPatron(pid) {
-  const gd = loadGrupalData();
-  const p = gd.patrones.find(x => x.id === pid);
-  if (!p) return;
-  document.getElementById('gr-modal-patron-title').textContent = 'Editar patrón';
-  document.getElementById('gr-pat-id').value = p.id;
-  document.getElementById('gr-pat-tipo').value = p.tipo;
-  document.getElementById('gr-pat-titulo').value = p.titulo;
-  document.getElementById('gr-pat-subtitulo').value = p.subtitulo;
-  document.getElementById('gr-pat-cuerpo').value = p.cuerpo;
-  document.getElementById('gr-pat-personas').value = p.personas.join(', ');
-  document.getElementById('gr-pat-color').value = p.color;
-  document.getElementById('gr-btn-del-patron').style.display = 'block';
-  document.getElementById('gr-modal-patron').classList.add('open');
-}
-
-function closeGrModalPatron() {
-  document.getElementById('gr-modal-patron').classList.remove('open');
-}
-
-function savePatron() {
-  const gd = loadGrupalData();
-  const pid = document.getElementById('gr-pat-id').value;
-  const obj = {
-    id: pid || 'pg' + Date.now(),
-    tipo: document.getElementById('gr-pat-tipo').value,
-    titulo: document.getElementById('gr-pat-titulo').value.trim(),
-    subtitulo: document.getElementById('gr-pat-subtitulo').value.trim(),
-    cuerpo: document.getElementById('gr-pat-cuerpo').value.trim(),
-    personas: document.getElementById('gr-pat-personas').value.split(',').map(s=>s.trim()).filter(Boolean),
-    color: document.getElementById('gr-pat-color').value
-  };
-  if (!obj.titulo) return;
-  if (pid) {
-    const idx = gd.patrones.findIndex(x => x.id === pid);
-    if (idx >= 0) gd.patrones[idx] = obj;
-  } else {
-    gd.patrones.push(obj);
-  }
-  saveGrupalData(gd);
-  closeGrModalPatron();
-  navigate('grupal');
-  toast('✓ Patrón guardado');
-}
-
-function deletePatron() {
-  const pid = document.getElementById('gr-pat-id').value;
-  if (!pid) return;
-  const gd = loadGrupalData();
-  gd.patrones = gd.patrones.filter(x => x.id !== pid);
-  saveGrupalData(gd);
-  closeGrModalPatron();
-  navigate('grupal');
-  toast('✓ Patrón eliminado');
-}
-
-// --- ENCUENTROS CRUD ---
-function openAddEncuentro() {
-  ['titulo','asistentes','objetivo','apertura','desarrollo','cierre','observaciones','proximoPaso'].forEach(f => {
-    const el = document.getElementById('gr-enc-'+f);
-    if (el) el.value = '';
-  });
-  document.getElementById('gr-enc-fecha').value = '';
-  document.getElementById('gr-enc-idx').value = '';
-  document.getElementById('gr-btn-del-enc').style.display = 'none';
-  document.getElementById('gr-modal-encuentro').classList.add('open');
-}
-
-function openEditEncuentro(idx) {
-  const gd = loadGrupalData();
-  const e = gd.encuentros[idx];
-  if (!e) return;
-  document.getElementById('gr-enc-idx').value = idx;
-  ['titulo','fecha','asistentes','objetivo','apertura','desarrollo','cierre','observaciones','proximoPaso'].forEach(f => {
-    const el = document.getElementById('gr-enc-'+f);
-    if (el) el.value = e[f] || '';
-  });
-  document.getElementById('gr-btn-del-enc').style.display = 'block';
-  document.getElementById('gr-modal-encuentro').classList.add('open');
-}
-
-function closeGrModalEncuentro() {
-  document.getElementById('gr-modal-encuentro').classList.remove('open');
-}
-
-function saveEncuentro() {
-  const gd = loadGrupalData();
-  if (!gd.encuentros) gd.encuentros = [];
-  const idxRaw = document.getElementById('gr-enc-idx').value;
-  const obj = {};
-  ['titulo','fecha','asistentes','objetivo','apertura','desarrollo','cierre','observaciones','proximoPaso'].forEach(f => {
-    const el = document.getElementById('gr-enc-'+f);
-    if (el) obj[f] = el.value.trim();
-  });
-  if (idxRaw !== '') {
-    gd.encuentros[parseInt(idxRaw)] = obj;
-  } else {
-    gd.encuentros.push(obj);
-  }
-  saveGrupalData(gd);
-  closeGrModalEncuentro();
-  grupalActiveTab = 'encuentros';
-  navigate('grupal');
-  toast('✓ Encuentro guardado');
-}
-
-function deleteEncuentro() {
-  const idxRaw = document.getElementById('gr-enc-idx').value;
-  if (idxRaw === '') return;
-  const gd = loadGrupalData();
-  gd.encuentros.splice(parseInt(idxRaw), 1);
-  saveGrupalData(gd);
-  closeGrModalEncuentro();
-  grupalActiveTab = 'encuentros';
-  navigate('grupal');
-  toast('✓ Encuentro eliminado');
-}
-
-function exportGrupal() {
-  const gd = loadGrupalData();
-  const blob = new Blob([JSON.stringify(gd, null, 2)], {type:'application/json'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'maran_grupal_' + new Date().toISOString().slice(0,10) + '.json';
-  a.click();
 }
 
 // ================================================================
