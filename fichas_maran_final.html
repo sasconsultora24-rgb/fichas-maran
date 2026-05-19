@@ -597,7 +597,7 @@ function buildGrupalView() {
   return `
   <div class="dash-wrap" style="max-width:820px">
     <div class="dash-title">Análisis grupal</div>
-    <div class="dash-sub">Patrones identificados en las entrevistas individuales realizadas hasta ahora</div>
+    <div class="dash-sub">Patrones y conclusiones diagnósticas — Programa Mandos Medios · Maran Suites & Towers</div>
 
     <div style="margin-bottom:20px;background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden">
       <div style="background:var(--bur);padding:12px 18px;color:#fff;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.6px">Patrones dominantes — Dificultades</div>
@@ -729,6 +729,26 @@ function buildGrupalView() {
         </div>
       </div>
     </div>
+
+    <div style="margin-bottom:20px;background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden">
+      <div style="background:var(--bur);padding:12px 18px;color:#fff;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.6px">Conclusiones diagnósticas</div>
+      <div style="padding:18px;display:flex;flex-direction:column;gap:14px">
+        ${[
+          ['#7B1A2E','1. Claridad en el rol: la base del programa','La mayoría de los mandos medios no tiene del todo claro a quién reporta, quiénes le reportan, cuáles son sus límites de autoridad y cuáles sus posibilidades de crecimiento. Clarificar el rol no es un punto de partida administrativo — es la condición mínima para que puedan liderar.'],
+          ['#2C5F2D','2. Compromiso individual y buen ambiente laboral','Se destaca de manera transversal el compromiso personal de los mandos medios con su trabajo y con el hotel. El ambiente laboral es percibido como positivo — un activo sólido sobre el cual construir el programa.'],
+          ['#C0392B','3. Comunicación entre áreas: la falla más grande','La comunicación interdepartamental es la dificultad más extendida y de mayor impacto operativo. Mientras los mandos medios no funcionen como red, el servicio depende de la voluntad individual de cada uno y no de un sistema.'],
+          ['#7B1A2E','4. Unificar criterios: el denominador común','No hay consenso sobre cómo se hacen las cosas en Maran. Cada sector tiene sus propias formas. Esto genera inconsistencias en el servicio, confusiones frente a situaciones nuevas y dificultad para alinear al equipo propio.'],
+          ['#5A4A3A','5. Manual de mandos medios: herramienta prioritaria','Uno de los productos más concretos y urgentes del programa es la construcción de un manual de mandos medios: roles, líneas de reporte, estándares de conducta, criterios comunes de gestión y pautas de comunicación entre áreas.'],
+          ['#2C5F2D','6. Los mandos medios están en el lugar adecuado','En líneas generales, los participantes están bien posicionados en sus roles. No se identifican casos de inadecuación. El nivel del grupo es bueno — lo que falta no son personas diferentes, sino herramientas, claridad y coordinación.'],
+          ['#7B1A2E','7. Que el grupo funcione como equipo: el objetivo principal','El desafío central no es solo el desarrollo individual, sino lograr que el conjunto funcione como equipo. Las relaciones entre mandos medios son hoy débiles o inexistentes. Fortalecer esos vínculos es lo que puede transformar un buen nivel individual en un servicio excelente.'],
+        ].map(([color,title,text])=>`
+          <div style="border-left:4px solid ${color};padding-left:14px;padding-top:4px;padding-bottom:4px">
+            <div style="font-weight:600;font-size:13px;margin-bottom:4px;color:var(--dark)">${title}</div>
+            <div style="font-size:12px;line-height:1.6;color:var(--mid)">${text}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+
   </div>`;
 }
 
