@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Planilla de Seguimiento — Objetivo SPA · Maran</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=DM+Sans:wght@300;400;500;600&display=swap');
+  :root{--bur:#7B1A2E;--bur2:#9B2A3E;--ora:#C8591A;--cream:#F7F3EE;--dark:#1A1410;--mid:#5A4A3A;--line:#E2D9CF;--ibg:#FFFDF9}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);font-size:14px;padding:0}
+
+  /* ── HEADER ── */
+  .page-header{background:var(--bur);padding:18px 32px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .page-header h1{font-family:'Playfair Display',serif;font-size:20px;color:#fff;font-weight:600}
+  .page-header p{color:rgba(255,255,255,0.6);font-size:11px;margin-top:3px;text-transform:uppercase;letter-spacing:0.5px}
+  .hbtns{display:flex;gap:8px;flex-wrap:wrap}
+  .hbtn{padding:7px 14px;border-radius:2px;font-size:11px;font-weight:500;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;letter-spacing:0.4px;text-transform:uppercase;transition:all 0.2s}
+  .hbtn-pri{background:#fff;color:var(--bur)}.hbtn-pri:hover{background:#f0e8e0}
+  .hbtn-sec{background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3)}.hbtn-sec:hover{background:rgba(255,255,255,0.25)}
+
+  /* ── LAYOUT ── */
+  .container{max-width:1100px;margin:0 auto;padding:24px 20px}
+
+  /* ── META SECTION ── */
+  .meta-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:20px}
+  .meta-field{background:#fff;border:1px solid var(--line);border-radius:3px;padding:10px 12px}
+  .meta-field label{display:block;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--mid);margin-bottom:5px}
+  .meta-field input,.meta-field select{width:100%;border:none;background:none;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--dark);outline:none}
+
+  /* ── OBJETIVO BOX ── */
+  .objetivo-box{background:var(--bur);border-radius:3px;padding:14px 18px;margin-bottom:20px;display:flex;align-items:flex-start;gap:14px}
+  .obj-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.6px;color:rgba(255,255,255,0.6);margin-bottom:4px}
+  .obj-val{font-size:14px;color:#fff;font-weight:500;line-height:1.5}
+  .obj-val[contenteditable]{outline:none;border-bottom:1px dashed rgba(255,255,255,0.3);padding-bottom:2px}
+
+  /* ── AREA CARDS ── */
+  .areas-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.7px;color:var(--mid);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+  .add-area-btn{font-size:11px;padding:4px 10px;border-radius:2px;cursor:pointer;border:1px dashed var(--mid);background:transparent;color:var(--mid);font-family:'DM Sans',sans-serif;transition:all 0.15s}
+  .add-area-btn:hover{border-color:var(--bur);color:var(--bur)}
+  .areas-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;margin-bottom:24px}
+  .area-card{background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+  .area-card-hd{background:var(--bur);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .area-name{font-size:13px;font-weight:600;color:#fff;outline:none;flex:1;background:transparent;border:none;font-family:'DM Sans',sans-serif}
+  .area-name::placeholder{color:rgba(255,255,255,0.5)}
+  .del-area{font-size:16px;color:rgba(255,255,255,0.5);cursor:pointer;border:none;background:none;line-height:1;padding:0}
+  .del-area:hover{color:#fff}
+  .area-card-body{padding:12px 14px}
+  .area-section{margin-bottom:10px}
+  .area-section:last-child{margin-bottom:0}
+  .area-sec-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--mid);margin-bottom:5px;display:flex;align-items:center;gap:6px}
+  .area-sec-label span{opacity:0.6}
+  .idea-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:6px}
+  .idea-num{width:20px;height:20px;border-radius:50%;background:var(--bur);color:#fff;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+  .idea-num.orange{background:var(--ora)}
+  .idea-input{flex:1;border:1px solid var(--line);border-radius:2px;padding:5px 8px;font-size:12px;font-family:'DM Sans',sans-serif;color:var(--dark);background:var(--ibg);outline:none;resize:vertical;min-height:32px;transition:border 0.2s}
+  .idea-input:focus{border-color:var(--bur)}
+  .status-row{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+  .status-chip{font-size:11px;padding:3px 10px;border-radius:12px;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--mid);transition:all 0.15s;user-select:none}
+  .status-chip.active-pend{background:#FEF3CD;border-color:#D4880A;color:#7A4800}
+  .status-chip.active-prog{background:#E2F4EE;border-color:#0F7A58;color:#0A4E38}
+  .status-chip.active-ok{background:#7B1A2E;border-color:#7B1A2E;color:#fff}
+  .spa-badge{display:flex;align-items:center;gap:4px}
+  .spa-check{width:18px;height:18px;border-radius:3px;border:1.5px solid var(--line);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.15s;background:#fff}
+  .spa-check.checked{background:var(--bur);border-color:var(--bur);color:#fff}
+  .spa-label{font-size:11px;color:var(--mid)}
+  .notes-input{width:100%;border:1px solid var(--line);border-radius:2px;padding:6px 8px;font-size:12px;font-family:'DM Sans',sans-serif;color:var(--dark);background:var(--ibg);outline:none;resize:vertical;min-height:44px;transition:border 0.2s;margin-top:4px}
+  .notes-input:focus{border-color:var(--bur)}
+  .divider{border:none;border-top:1px solid var(--line);margin:8px 0}
+
+  /* ── SEGUIMIENTO TABLE ── */
+  .seg-wrap{margin-bottom:24px}
+  .seg-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+  .seg-table th{background:var(--bur);color:#fff;padding:9px 12px;font-size:11px;font-weight:600;text-align:left;letter-spacing:0.3px}
+  .seg-table td{padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  .seg-table tr:last-child td{border-bottom:none}
+  .seg-table tr:hover td{background:var(--cream)}
+  .seg-td-input{width:100%;border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--dark);outline:none}
+  .add-row-btn{margin-top:8px;font-size:11px;padding:5px 12px;border-radius:2px;cursor:pointer;border:1px dashed var(--mid);background:transparent;color:var(--mid);font-family:'DM Sans',sans-serif}
+  .add-row-btn:hover{border-color:var(--bur);color:var(--bur)}
+
+  /* ── PRINT ── */
+  @media print{
+    .page-header .hbtns,.add-area-btn,.del-area,.add-row-btn{display:none!important}
+    body{background:#fff}
+    .container{padding:8px}
+    .area-card,.seg-table{break-inside:avoid}
+  }
+  @media(max-width:600px){.areas-grid{grid-template-columns:1fr}}
+
+  .toast{position:fixed;bottom:20px;right:20px;background:var(--dark);color:#fff;padding:10px 18px;border-radius:3px;font-size:13px;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:100}
+  .toast.show{opacity:1}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div>
+    <h1>Planilla de Seguimiento — Objetivo SPA</h1>
+    <p>Maran Suites &amp; Towers · SAS Consultora</p>
+  </div>
+  <div class="hbtns">
+    <button class="hbtn hbtn-sec" onclick="addArea()">+ Agregar área</button>
+    <button class="hbtn hbtn-pri" onclick="saveLocal()">💾 Guardar</button>
+    <button class="hbtn hbtn-sec" onclick="exportJSON()">⬇ Exportar</button>
+    <button class="hbtn hbtn-sec" onclick="window.print()">🖨 Imprimir</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Meta -->
+  <div class="meta-grid" id="metaGrid">
+    <div class="meta-field">
+      <label>Fecha de inicio</label>
+      <input type="date" id="meta-fecha-inicio">
+    </div>
+    <div class="meta-field">
+      <label>Fecha de cierre</label>
+      <input type="date" id="meta-fecha-cierre">
+    </div>
+    <div class="meta-field">
+      <label>Responsable SPA</label>
+      <input type="text" id="meta-responsable" placeholder="Nombre">
+    </div>
+    <div class="meta-field">
+      <label>% objetivo actual SPA</label>
+      <input type="text" id="meta-pct-actual" placeholder="ej: 12%">
+    </div>
+    <div class="meta-field">
+      <label>% objetivo a alcanzar</label>
+      <input type="text" id="meta-pct-meta" placeholder="ej: 20%">
+    </div>
+    <div class="meta-field">
+      <label>Período</label>
+      <input type="text" id="meta-periodo" placeholder="ej: Junio – Agosto 2025">
+    </div>
+  </div>
+
+  <!-- Objetivo -->
+  <div class="objetivo-box">
+    <div style="flex:1">
+      <div class="obj-label">Objetivo del programa</div>
+      <div class="obj-val" id="obj-texto" contenteditable="true">Aumentar el porcentaje de consumo del SPA por parte de huéspedes y comensales de Maran Suites &amp; Towers, a través del compromiso y las ideas aportadas por todas las áreas.</div>
+    </div>
+  </div>
+
+  <!-- Áreas -->
+  <div class="areas-title">
+    <span>Ideas y compromisos por área</span>
+    <button class="add-area-btn" onclick="addArea()">+ Agregar área</button>
+  </div>
+  <div class="areas-grid" id="areasGrid"></div>
+
+  <!-- Tabla de seguimiento mensual -->
+  <div class="seg-wrap">
+    <div class="areas-title" style="margin-bottom:10px">
+      <span>Seguimiento mensual — SPA ejecuta el monitoreo</span>
+      <button class="add-row-btn" onclick="addSeguimientoRow()">+ Agregar fila</button>
+    </div>
+    <table class="seg-table">
+      <thead>
+        <tr>
+          <th style="width:90px">Fecha</th>
+          <th style="width:130px">Área</th>
+          <th>Idea / acción</th>
+          <th style="width:110px">Estado</th>
+          <th>Resultado / impacto observado</th>
+          <th style="width:80px">% SPA</th>
+        </tr>
+      </thead>
+      <tbody id="segBody"></tbody>
+    </table>
+    <button class="add-row-btn" onclick="addSeguimientoRow()">+ Agregar fila</button>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── DATA ─────────────────────────────────────────────────────────
+const AREAS_DEFAULT = [
+  { id: 'a1', nombre: 'Recepción', idea1: '', idea2: '', plan1: '', plan2: '', spa_ok1: false, spa_ok2: false, estado: 'pendiente', notas: '' },
+  { id: 'a2', nombre: 'Restaurante / Comedor', idea1: '', idea2: '', plan1: '', plan2: '', spa_ok1: false, spa_ok2: false, estado: 'pendiente', notas: '' },
+  { id: 'a3', nombre: 'Housekeeping', idea1: '', idea2: '', plan1: '', plan2: '', spa_ok1: false, spa_ok2: false, estado: 'pendiente', notas: '' },
+  { id: 'a4', nombre: 'Mantenimiento', idea1: '', idea2: '', plan1: '', plan2: '', spa_ok1: false, spa_ok2: false, estado: 'pendiente', notas: '' },
+  { id: 'a5', nombre: 'Administración', idea1: '', idea2: '', plan1: '', plan2: '', spa_ok1: false, spa_ok2: false, estado: 'pendiente', notas: '' },
+  { id: 'a6', nombre: 'SPA', idea1: '', idea2: '', plan1: '', plan2: '', spa_ok1: true, spa_ok2: true, estado: 'en_proceso', notas: '' },
+];
+
+const SEG_DEFAULT = [
+  { fecha: '', area: '', idea: '', estado: 'Pendiente', resultado: '', pct: '' },
+  { fecha: '', area: '', idea: '', estado: 'Pendiente', resultado: '', pct: '' },
+  { fecha: '', area: '', idea: '', estado: 'Pendiente', resultado: '', pct: '' },
+];
+
+let areas = [];
+let segRows = [];
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem('maran_spa_planilla');
+    if (raw) {
+      const d = JSON.parse(raw);
+      areas = d.areas || JSON.parse(JSON.stringify(AREAS_DEFAULT));
+      segRows = d.segRows || JSON.parse(JSON.stringify(SEG_DEFAULT));
+      // meta
+      ['fecha-inicio','fecha-cierre','responsable','pct-actual','pct-meta','periodo'].forEach(k => {
+        const el = document.getElementById('meta-' + k);
+        if (el && d.meta && d.meta[k]) el.value = d.meta[k];
+      });
+      const obj = document.getElementById('obj-texto');
+      if (obj && d.objetivo) obj.innerHTML = d.objetivo;
+    } else {
+      areas = JSON.parse(JSON.stringify(AREAS_DEFAULT));
+      segRows = JSON.parse(JSON.stringify(SEG_DEFAULT));
+    }
+  } catch(e) {
+    areas = JSON.parse(JSON.stringify(AREAS_DEFAULT));
+    segRows = JSON.parse(JSON.stringify(SEG_DEFAULT));
+  }
+}
+
+function collectData() {
+  const meta = {};
+  ['fecha-inicio','fecha-cierre','responsable','pct-actual','pct-meta','periodo'].forEach(k => {
+    const el = document.getElementById('meta-' + k);
+    if (el) meta[k] = el.value;
+  });
+  const objetivo = document.getElementById('obj-texto')?.innerHTML || '';
+  return { meta, objetivo, areas, segRows };
+}
+
+function saveLocal() {
+  localStorage.setItem('maran_spa_planilla', JSON.stringify(collectData()));
+  showToast('✓ Guardado');
+}
+
+function exportJSON() {
+  const blob = new Blob([JSON.stringify(collectData(), null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'planilla_spa_' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+}
+
+// ─── AREAS RENDER ────────────────────────────────────────────────
+function renderAreas() {
+  const grid = document.getElementById('areasGrid');
+  grid.innerHTML = '';
+  areas.forEach((a, idx) => {
+    const card = document.createElement('div');
+    card.className = 'area-card';
+    card.innerHTML = `
+      <div class="area-card-hd" style="background:${areaColor(idx)}">
+        <input class="area-name" placeholder="Nombre del área" value="${esc(a.nombre)}" onchange="areas[${idx}].nombre=this.value">
+        <button class="del-area" onclick="deleteArea(${idx})" title="Eliminar área">×</button>
+      </div>
+      <div class="area-card-body">
+        <div class="area-section">
+          <div class="area-sec-label">💡 Ideas seleccionadas <span>(las 2 elegidas por el área)</span></div>
+          <div class="idea-row">
+            <div class="idea-num">1</div>
+            <textarea class="idea-input" placeholder="Idea 1..." onchange="areas[${idx}].idea1=this.value">${esc(a.idea1)}</textarea>
+          </div>
+          <div class="idea-row">
+            <div class="idea-num">2</div>
+            <textarea class="idea-input" placeholder="Idea 2..." onchange="areas[${idx}].idea2=this.value">${esc(a.idea2)}</textarea>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="area-section">
+          <div class="area-sec-label">📋 Plan de acción <span>(cómo lo van a implementar)</span></div>
+          <div class="idea-row">
+            <div class="idea-num orange">1</div>
+            <textarea class="idea-input" placeholder="Plan para idea 1..." onchange="areas[${idx}].plan1=this.value">${esc(a.plan1)}</textarea>
+          </div>
+          <div class="idea-row">
+            <div class="idea-num orange">2</div>
+            <textarea class="idea-input" placeholder="Plan para idea 2..." onchange="areas[${idx}].plan2=this.value">${esc(a.plan2)}</textarea>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="area-section">
+          <div class="area-sec-label">✅ Validación SPA</div>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:4px">
+            <div class="spa-badge">
+              <div class="spa-check ${a.spa_ok1?'checked':''}" onclick="toggleSpa(${idx},'spa_ok1',this)">${a.spa_ok1?'✓':''}</div>
+              <span class="spa-label">SPA aceptó idea 1</span>
+            </div>
+            <div class="spa-badge">
+              <div class="spa-check ${a.spa_ok2?'checked':''}" onclick="toggleSpa(${idx},'spa_ok2',this)">${a.spa_ok2?'✓':''}</div>
+              <span class="spa-label">SPA aceptó idea 2</span>
+            </div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="area-section">
+          <div class="area-sec-label">📊 Estado de implementación</div>
+          <div class="status-row">
+            <div class="status-chip ${a.estado==='pendiente'?'active-pend':''}" onclick="setEstado(${idx},'pendiente')">Pendiente</div>
+            <div class="status-chip ${a.estado==='en_proceso'?'active-prog':''}" onclick="setEstado(${idx},'en_proceso')">En proceso</div>
+            <div class="status-chip ${a.estado==='completado'?'active-ok':''}" onclick="setEstado(${idx},'completado')">Completado</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="area-section">
+          <div class="area-sec-label">📝 Notas / observaciones SPA</div>
+          <textarea class="notes-input" placeholder="Observaciones del monitoreo..." onchange="areas[${idx}].notas=this.value">${esc(a.notas)}</textarea>
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function areaColor(idx) {
+  const colors = ['7B1A2E','9B2A3E','C8591A','5A4A3A','2C3E50','0F6E56','534AB7'];
+  return colors[idx % colors.length];
+}
+
+function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function addArea() {
+  areas.push({ id: 'a' + Date.now(), nombre: '', idea1:'', idea2:'', plan1:'', plan2:'', spa_ok1:false, spa_ok2:false, estado:'pendiente', notas:'' });
+  renderAreas();
+  showToast('✓ Área agregada');
+}
+
+function deleteArea(idx) {
+  if (confirm('¿Eliminar esta área?')) {
+    areas.splice(idx, 1);
+    renderAreas();
+  }
+}
+
+function toggleSpa(idx, field, el) {
+  areas[idx][field] = !areas[idx][field];
+  el.classList.toggle('checked');
+  el.textContent = areas[idx][field] ? '✓' : '';
+}
+
+function setEstado(idx, estado) {
+  areas[idx].estado = estado;
+  renderAreas();
+}
+
+// ─── SEGUIMIENTO TABLE ────────────────────────────────────────────
+function renderSeguimiento() {
+  const tbody = document.getElementById('segBody');
+  tbody.innerHTML = '';
+  segRows.forEach((r, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><input class="seg-td-input" type="date" value="${r.fecha||''}" onchange="segRows[${i}].fecha=this.value"></td>
+      <td><input class="seg-td-input" placeholder="Área" value="${esc(r.area)}" onchange="segRows[${i}].area=this.value"></td>
+      <td><input class="seg-td-input" placeholder="Idea o acción específica" value="${esc(r.idea)}" onchange="segRows[${i}].idea=this.value"></td>
+      <td>
+        <select class="seg-td-input" onchange="segRows[${i}].estado=this.value">
+          <option ${r.estado==='Pendiente'?'selected':''}>Pendiente</option>
+          <option ${r.estado==='En proceso'?'selected':''}>En proceso</option>
+          <option ${r.estado==='Completado'?'selected':''}>Completado</option>
+          <option ${r.estado==='Cancelado'?'selected':''}>Cancelado</option>
+        </select>
+      </td>
+      <td><input class="seg-td-input" placeholder="Resultado observado" value="${esc(r.resultado)}" onchange="segRows[${i}].resultado=this.value"></td>
+      <td><input class="seg-td-input" placeholder="%" value="${esc(r.pct)}" onchange="segRows[${i}].pct=this.value" style="text-align:center"></td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function addSeguimientoRow() {
+  segRows.push({ fecha:'', area:'', idea:'', estado:'Pendiente', resultado:'', pct:'' });
+  renderSeguimiento();
+}
+
+// ─── TOAST ────────────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+// ─── INIT ────────────────────────────────────────────────────────
+loadData();
+renderAreas();
+renderSeguimiento();
+
+// Autosave on leave
+window.addEventListener('beforeunload', saveLocal);
+</script>
+</body>
+</html>
